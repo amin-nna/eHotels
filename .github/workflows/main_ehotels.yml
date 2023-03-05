@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'eHotels'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DF80C108C6484057859FDC93F88F9614 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_82B80B168EC140C3A17E58A1C253A284 }}
           package: .
