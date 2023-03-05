@@ -12,8 +12,8 @@ using realEstateWebApp.Areas.Identity.Data;
 namespace eHotels.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230305034351_InitialDb")]
-    partial class InitialDb
+    [Migration("20230305040854_setup")]
+    partial class setup
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
