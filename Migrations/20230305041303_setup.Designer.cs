@@ -12,7 +12,7 @@ using realEstateWebApp.Areas.Identity.Data;
 namespace eHotels.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230305040854_setup")]
+    [Migration("20230305041303_setup")]
     partial class setup
     {
         /// <inheritdoc />
