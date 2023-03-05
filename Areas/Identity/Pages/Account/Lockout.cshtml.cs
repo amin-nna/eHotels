@@ -4,9 +4,9 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using realEstateWebApp.Areas.Identity.Data;
+using eHotels.Areas.Identity.Data;
 
-namespace realEstateWebApp.Areas.Identity.Pages.Account
+namespace eHotels.Areas.Identity.Pages.Account
 {
     /// <summary>
     ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used

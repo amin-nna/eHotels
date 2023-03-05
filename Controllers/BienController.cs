@@ -5,18 +5,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using realEstateWebApp.Areas.Identity.Data;
-using realEstateWebApp.Models;
+using eHotels.Areas.Identity.Data;
+using eHotels.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Identity;
-using realEstateWebApp.Services;
+using eHotels.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using static NuGet.Packaging.PackagingConstants;
 using Microsoft.AspNetCore.Http.HttpResults;
 using System.IO;
 
-namespace realEstateWebApp.Controllers
+namespace eHotels.Controllers
 {
     public class BienController : Controller
     {

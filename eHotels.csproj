@@ -5,12 +5,12 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>4fe294eb-4cb1-43d4-9005-c97bd4e5a2a3</UserSecretsId>
-    <AssemblyName>realEstateWebApp</AssemblyName>
+    <AssemblyName>eHotels</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
-  <PropertyGroup Condition=" '$(RunConfiguration)' == 'realEstateWebApp' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'eHotels' " />
   <ItemGroup>
     <None Remove="Microsoft.EntityFrameworkCore" />
     <None Remove="Microsoft.EntityFrameworkCore.SqlServer" />

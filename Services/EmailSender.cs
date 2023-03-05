@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Mail;
 using Microsoft.Extensions.Configuration;
 
-namespace realEstateWebApp.Services
+namespace eHotels.Services
 {
 	public class EmailSender
 	{

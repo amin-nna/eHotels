@@ -31,10 +31,10 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "realEstateWebApp": {
+    "eHotels": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:7491;http://localhost:60203",
+      "applicationUrl": "http://localhost:17590",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

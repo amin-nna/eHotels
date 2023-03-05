@@ -11,9 +11,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using realEstateWebApp.Areas.Identity.Data;
+using eHotels.Areas.Identity.Data;
 
-namespace realEstateWebApp.Areas.Identity.Pages.Account
+namespace eHotels.Areas.Identity.Pages.Account
 {
     public class ResetPasswordModel : PageModel
     {

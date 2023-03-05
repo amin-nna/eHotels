@@ -18,12 +18,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using realEstateWebApp.Areas.Identity.Data;
-using realEstateWebApp.Services;
+using eHotels.Areas.Identity.Data;
+using eHotels.Services;
 using System.Diagnostics;
 using Twilio.TwiML.Messaging;
 
-namespace realEstateWebApp.Areas.Identity.Pages.Account
+namespace eHotels.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {

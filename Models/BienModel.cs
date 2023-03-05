@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 using System.Diagnostics.CodeAnalysis;
 
-namespace realEstateWebApp.Models
+namespace eHotels.Models
 {
     public class BienModel
     {
