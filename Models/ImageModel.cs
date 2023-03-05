@@ -1,5 +1,5 @@
 ﻿using System;
-namespace realEstateWebApp.Models
+namespace eHotels.Models
 {
 	public class ImageModel
 	{
