@@ -169,6 +169,7 @@ namespace realEstateWebApp.Areas.Identity.Pages.Account
                 user.Street = Input.Street;
                 user.City = Input.City;
                 user.Province = Input.Province;
+                user.PostalCode = Input.PostalCode;
                 //We configure phone country code and phone number
                 user.PhoneNumber = Input.PhoneNumber;
                 Debug.WriteLine(Input.PhoneNumber);
