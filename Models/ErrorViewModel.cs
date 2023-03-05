@@ -1,4 +1,4 @@
-﻿namespace eHotels.Models;
+﻿namespace realEstateWebApp.Models;
 
 public class ErrorViewModel
 {

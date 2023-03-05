@@ -10,9 +10,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using eHotels.Areas.Identity.Data;
+using realEstateWebApp.Areas.Identity.Data;
 
-namespace eHotels.Areas.Identity.Pages.Account
+namespace realEstateWebApp.Areas.Identity.Pages.Account
 {
     public class LoginWithRecoveryCodeModel : PageModel
     {

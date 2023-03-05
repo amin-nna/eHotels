@@ -1,4 +1,4 @@
-@model eHotels.Models.BienModel
+@model realEstateWebApp.Models.BienModel
 @{
     ViewData["Title"] = "Edit";
 }
@@ -9,24 +9,42 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+
             <div class="form-group">
                 <label asp-for="TypeDeBien" class="control-label"></label>
-                <input asp-for="TypeDeBien" class="form-control" />
+                <select asp-for="TypeDeBien" class="form-control">
+                    <option>Choisissez le type de bien</option>
+                    <option>Terrain</option>
+                    <option>Maison</option>
+                    <option>Appartement</option>
+                </select>
                 <span asp-validation-for="TypeDeBien" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="ImageDeBien" class="control-label"></label>
                 <input asp-for="ImageDeBien" class="form-control" />
                 <span asp-validation-for="ImageDeBien" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="ImagesDeBien" class="control-label"></label>
+                <input asp-for="ImagesDeBien" class="form-control" />
+                <span asp-validation-for="ImagesDeBien" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <label asp-for="TypeDeTransaction" class="control-label"></label>
-                <input asp-for="TypeDeTransaction" class="form-control" />
+                <select asp-for="TypeDeTransaction" class="form-control">
+                    <option>Choisissez le type de transaction</option>
+                    <option>À louer</option>
+                    <option>À vendre</option>
+                </select>
                 <span asp-validation-for="TypeDeTransaction" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
@@ -47,6 +65,7 @@
                 <input asp-for="Prix" class="form-control" />
                 <span asp-validation-for="Prix" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

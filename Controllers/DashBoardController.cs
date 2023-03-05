@@ -2,19 +2,22 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using eHotels.Areas.Identity.Data;
-using eHotels.Models;
+using realEstateWebApp.Areas.Identity.Data;
+using realEstateWebApp.Models;
+using realEstateWebApp.Services;
 
-namespace eHotels.Controllers;
+namespace realEstateWebApp.Controllers;
 
 public class DashboardController : Controller
 {
     
     private readonly ApplicationDbContext _context;
+    private IUserService _userService;
 
-    public DashboardController(ApplicationDbContext context)
+    public DashboardController(ApplicationDbContext context, IUserService userService)
     {
         _context = context;
+        _userService = userService;
     }
 
     //Nous renvoies vers les vues respectives
@@ -31,11 +34,8 @@ public class DashboardController : Controller
         return View();
     }
 
-    //Vue du formulaire d'ajout d'un bien
-    public IActionResult SellEstate()
-    {
-        return View();
-    }
+
+
 
     //Vue de la page pour gérer l'abonnement
     public IActionResult MySubscription()
@@ -45,14 +45,7 @@ public class DashboardController : Controller
 
    
 
-    // GET: BienModel
-    // Affiche les biens de la personne connectée
-    public async Task<IActionResult> MyEstate()
-    {
-        return _context.Biens != null ?
-                    View(await _context.Biens.Where(b => b.IdUser.Equals(User.Identity.GetUserId())).ToListAsync()) :
-                    Problem("Entity set 'ApplicationDbContext.Bien'  is null.");
-    }
+    
 
     //
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

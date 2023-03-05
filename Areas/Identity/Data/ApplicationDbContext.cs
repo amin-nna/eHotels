@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using eHotels.Models;
+using realEstateWebApp.Models;
 
-namespace eHotels.Areas.Identity.Data;
+namespace realEstateWebApp.Areas.Identity.Data;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
@@ -35,13 +35,6 @@ public class ApplicationUserEntityConfiguration : IEntityTypeConfiguration<Appli
     {
         builder.Property(u => u.FirstName).HasMaxLength(255);
         builder.Property(u => u.LastName).HasMaxLength(255);
-        builder.Property(u => u.SIN).HasMaxLength(255);
-        builder.Property(u => u.Street).HasMaxLength(255);
-        builder.Property(u => u.City).HasMaxLength(255);
-        builder.Property(u => u.Province).HasMaxLength(255);
-        builder.Property(u => u.PostalCode).HasMaxLength(255);
-
-
-}
+    }
 }
 

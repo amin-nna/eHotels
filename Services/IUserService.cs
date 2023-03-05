@@ -1,4 +1,4 @@
-﻿namespace eHotels.Services
+﻿namespace realEstateWebApp.Services
 {
     public interface IUserService
     {

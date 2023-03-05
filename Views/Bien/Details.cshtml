@@ -1,4 +1,4 @@
-@model eHotels.Models.BienModel
+@model realEstateWebApp.Models.BienModel
 
 @{
     ViewData["Title"] = "Details";
@@ -8,7 +8,7 @@
 
 
 <div class="container">
-    
+
     <div class="row">
         <div class="col-md-6">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -23,7 +23,7 @@
                     @for (int i = 0; i < Model.ImagesDeBienUrl.Count(); i++)
                     {
                         <div class="@(i==0 ? "carousel-item active" : "carousel-item") ">
-                            <img class="d-block w-100" src="@Model.ImagesDeBienUrl[i].Url" alt="@Model.ImagesDeBienUrl[i].Name">
+                            <img class="d-block w-100" src="/@Model.ImagesDeBienUrl[i].Url" alt="@Model.ImagesDeBienUrl[i].Name">
                         </div>
                     }
 

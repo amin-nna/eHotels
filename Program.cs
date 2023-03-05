@@ -1,7 +1,7 @@
-﻿using eHotels.Areas.Identity.Data;
+﻿using realEstateWebApp.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using eHotels.Services;
+using realEstateWebApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = new ConfigurationBuilder()

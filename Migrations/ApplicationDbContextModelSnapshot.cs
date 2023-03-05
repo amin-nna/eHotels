@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using eHotels.Areas.Identity.Data;
+using realEstateWebApp.Areas.Identity.Data;
 
 #nullable disable
 
-namespace eHotels.Migrations
+namespace realEstateWebApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -159,18 +159,13 @@ namespace eHotels.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("eHotels.Areas.Identity.Data.ApplicationUser", b =>
+            modelBuilder.Entity("realEstateWebApp.Areas.Identity.Data.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -216,28 +211,8 @@ namespace eHotels.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("Province")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("SIN")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Street")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -259,7 +234,7 @@ namespace eHotels.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("eHotels.Models.BienModel", b =>
+            modelBuilder.Entity("realEstateWebApp.Models.BienModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -303,7 +278,7 @@ namespace eHotels.Migrations
                     b.ToTable("Biens");
                 });
 
-            modelBuilder.Entity("eHotels.Models.ImageModel", b =>
+            modelBuilder.Entity("realEstateWebApp.Models.ImageModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -340,7 +315,7 @@ namespace eHotels.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("eHotels.Areas.Identity.Data.ApplicationUser", null)
+                    b.HasOne("realEstateWebApp.Areas.Identity.Data.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -349,7 +324,7 @@ namespace eHotels.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("eHotels.Areas.Identity.Data.ApplicationUser", null)
+                    b.HasOne("realEstateWebApp.Areas.Identity.Data.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -364,7 +339,7 @@ namespace eHotels.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("eHotels.Areas.Identity.Data.ApplicationUser", null)
+                    b.HasOne("realEstateWebApp.Areas.Identity.Data.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -373,21 +348,21 @@ namespace eHotels.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("eHotels.Areas.Identity.Data.ApplicationUser", null)
+                    b.HasOne("realEstateWebApp.Areas.Identity.Data.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("eHotels.Models.ImageModel", b =>
+            modelBuilder.Entity("realEstateWebApp.Models.ImageModel", b =>
                 {
-                    b.HasOne("eHotels.Models.BienModel", null)
+                    b.HasOne("realEstateWebApp.Models.BienModel", null)
                         .WithMany("ImagesDeBienUrl")
                         .HasForeignKey("BienModelId");
                 });
 
-            modelBuilder.Entity("eHotels.Models.BienModel", b =>
+            modelBuilder.Entity("realEstateWebApp.Models.BienModel", b =>
                 {
                     b.Navigation("ImagesDeBienUrl");
                 });

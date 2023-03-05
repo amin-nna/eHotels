@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using eHotels.Areas.Identity.Data;
+using realEstateWebApp.Areas.Identity.Data;
 
-namespace eHotels.Areas.Identity.Pages.Account.Manage
+namespace realEstateWebApp.Areas.Identity.Pages.Account.Manage
 {
     /// <summary>
     ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used

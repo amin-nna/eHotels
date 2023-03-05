@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Claims;
 
-namespace eHotels.Services
+namespace realEstateWebApp.Services
 {
     public class UserService : IUserService
     {

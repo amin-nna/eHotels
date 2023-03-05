@@ -1,5 +1,5 @@
 ﻿using System;
-namespace eHotels.Controllers
+namespace realEstateWebApp.Controllers
 {
 	public class InboxController
 	{

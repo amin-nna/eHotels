@@ -30,33 +30,8 @@
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.SIN" class="form-control" autocomplete="email" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.SIN">Social Insurance Number</label>
-                <span asp-validation-for="Input.SIN" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Street" class="form-control" autocomplete="email" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Street">Street</label>
-                <span asp-validation-for="Input.Street" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.City" class="form-control" autocomplete="email" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.City">City</label>
-                <span asp-validation-for="Input.City" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Province" class="form-control" autocomplete="email" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Province">Province</label>
-                <span asp-validation-for="Input.Province" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.PostalCode" class="form-control" autocomplete="email" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.PostalCode">PostalCode</label>
-                <span asp-validation-for="Input.PostalCode" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
                 <input asp-for="Input.PhoneNumber" class="form-control" id="phone" autocomplete="phonenumber" aria-required="true" />
-
+     
                 <script>const phoneInputField = document.querySelector("#phone");
                     const phoneInput = window.intlTelInput(phoneInputField, {
                         utilsScript:

@@ -5,18 +5,20 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using eHotels.Areas.Identity.Data;
-using eHotels.Models;
+using realEstateWebApp.Areas.Identity.Data;
+using realEstateWebApp.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Identity;
-using eHotels.Services;
+using realEstateWebApp.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using static NuGet.Packaging.PackagingConstants;
 using Microsoft.AspNetCore.Http.HttpResults;
 using System.IO;
+using System.Data;
+using System.Net;
 
-namespace eHotels.Controllers
+namespace realEstateWebApp.Controllers
 {
     public class BienController : Controller
     {
@@ -197,25 +199,27 @@ namespace eHotels.Controllers
             }
 
             var BienModel = await _context.Biens.FindAsync(id);
+            
             if (BienModel == null)
             {
                 return NotFound();
             }
+
+            BienModel.Id = (int)id;
+
             return View(BienModel);
         }
+       
 
         // POST: User/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TypeDeBien,ImageDeBien,TypeDeTransaction,Description,Superficie,Adresse,Prix")] BienModel BienModel)
+        public async Task<IActionResult> Edit([Bind(include: "TypeDeBien,ImageDeBien,ImagesDeBien,TypeDeTransaction,Description,Superficie,Adresse,Prix")] BienModel BienModel)
         {
-            if (id != BienModel.Id)
-            {
-                return NotFound();
-            }
-
+            ModelState.Remove("ImageDeBienUrl");
+            ModelState.Remove("ImagesDeBienUrl");
             if (ModelState.IsValid)
             {
                 try
@@ -238,6 +242,10 @@ namespace eHotels.Controllers
             }
             return View(BienModel);
         }
+
+        
+
+
 
         // GET: User/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -280,5 +288,18 @@ namespace eHotels.Controllers
         {
           return (_context.Biens?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+        // GET: BienModel
+        // Affiche les biens de la personne connectée
+        public async Task<IActionResult> MyEstate()
+        { 
+            string connectedUser = _userService.getUserId();
+            var result = await _context.Biens.Where(b => b.IdUser.ToString().Equals(connectedUser)).ToListAsync();
+            return _context.Biens != null ?
+                        View(result) :
+                        Problem("Entity set 'ApplicationDbContext.Bien'  is null.");
+        }
+
+
     }
 }
