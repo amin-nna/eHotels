@@ -96,11 +96,38 @@ namespace eHotels.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
+            
+
             //Custom
             [Required]
             [Display(Name = "PhoneNumber")]
             public string PhoneNumber { get; set; }
-            
+
+            [Required]
+            [Display(Name = "SIN")]
+            public string SIN { get; set; }
+
+            //Custom
+            [Required]
+            [Display(Name = "Street")]
+            public string Street { get; set; }
+
+            //Custom
+            [Required]
+            [Display(Name = "City")]
+            public string City { get; set; }
+
+            //Custom
+            [Required]
+            [Display(Name = "Province")]
+            public string Province { get; set; }
+
+            //Custom
+            [Required]
+            [Display(Name = "PostalCode")]
+            public string PostalCode { get; set; }
+
+
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -140,6 +167,11 @@ namespace eHotels.Areas.Identity.Pages.Account
                 //We configure first name and last name
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
+                user.SIN = Input.SIN;
+                user.Street = Input.Street;
+                user.City = Input.City;
+                user.Province = Input.Province;
+                user.PostalCode = Input.PostalCode;
                 //We configure phone country code and phone number
                 user.PhoneNumber = Input.PhoneNumber;
                 Debug.WriteLine(Input.PhoneNumber);

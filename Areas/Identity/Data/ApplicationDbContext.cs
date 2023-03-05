@@ -35,6 +35,12 @@ public class ApplicationUserEntityConfiguration : IEntityTypeConfiguration<Appli
     {
         builder.Property(u => u.FirstName).HasMaxLength(255);
         builder.Property(u => u.LastName).HasMaxLength(255);
+        builder.Property(u => u.SIN).HasMaxLength(255);
+        builder.Property(u => u.Street).HasMaxLength(255);
+        builder.Property(u => u.City).HasMaxLength(255);
+        builder.Property(u => u.Province).HasMaxLength(255);
+        builder.Property(u => u.PostalCode).HasMaxLength(255);
+
     }
 }
 
