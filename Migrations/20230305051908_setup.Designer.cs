@@ -12,7 +12,7 @@ using realEstateWebApp.Areas.Identity.Data;
 namespace eHotels.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230305050528_setup")]
+    [Migration("20230305051908_setup")]
     partial class setup
     {
         /// <inheritdoc />
@@ -329,7 +329,7 @@ namespace eHotels.Migrations
 
                     b.HasIndex("BienModelId");
 
-                    b.ToTable("ImagesBiens");
+                    b.ToTable("ImageModel");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

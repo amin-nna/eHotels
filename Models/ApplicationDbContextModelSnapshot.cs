@@ -326,7 +326,7 @@ namespace realEstateWebApp.Migrations
 
                     b.HasIndex("BienModelId");
 
-                    b.ToTable("ImagesBiens");
+                    b.ToTable("ImageModel");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
