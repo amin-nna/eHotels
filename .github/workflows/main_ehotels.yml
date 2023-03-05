@@ -26,19 +26,13 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: dotnet publish
-      
-      - name: Upload artifact to Azure Blob Storage
-        uses: azure/CLI@v1
-        with:
-          azcliversion: '2.26.2'
-          inlineScript: |
-            az storage blob upload-batch \
-              --destination https://ehotels.blob.core.windows.net/$logs \
-              --source ${{env.DOTNET_ROOT}}/myapp \
-              --pattern "*" \
-              --destination-path "/" \
-              --connection-string "${{ secrets.DefaultEndpointsProtocol=https;AccountName=ehotels;AccountKey=rz/AX9r2MOJLAV3crB0U5dIa0E+Vh6q8obmnWs/uZ/DD+w/G5AYUljel8gYFhAJ+1EfhCsa6fg2d+AStMA2R2g==;EndpointSuffix=core.windows.net }}"
+        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: .net-app
+          path: ${{env.DOTNET_ROOT}}/myapp
 
   deploy:
     runs-on: windows-latest
@@ -48,15 +42,10 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-      - name: Download artifact from Azure Blob Storage
-        uses: azure/CLI@v1
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v2
         with:
-          azcliversion: '2.26.2'
-          inlineScript: |
-            az storage blob download-batch \
-              --destination ${{env.DOTNET_ROOT}}/myapp \
-              --source https://ehotels.blob.core.windows.net/$logs \
-              --pattern "*"
+          name: .net-app
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -64,5 +53,5 @@ jobs:
         with:
           app-name: 'eHotels'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_055D143EA13E4BC597827F0F32EBFF37 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9F2CF132F4094E54BC39BCBECBF12D90 }}
           package: .
