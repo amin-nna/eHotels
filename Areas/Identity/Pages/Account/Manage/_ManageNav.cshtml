@@ -1,4 +1,4 @@
-@using realEstateWebApp.Areas.Identity.Data;
+@using eHotels.Areas.Identity.Data;
 @inject SignInManager<ApplicationUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();

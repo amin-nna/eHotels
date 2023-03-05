@@ -14,9 +14,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using realEstateWebApp.Areas.Identity.Data;
+using eHotels.Areas.Identity.Data;
 
-namespace realEstateWebApp.Areas.Identity.Pages.Account
+namespace eHotels.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {

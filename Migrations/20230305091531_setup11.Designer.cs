@@ -12,8 +12,8 @@ using eHotels.Areas.Identity.Data;
 namespace eHotels.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230305080915_setup5")]
-    partial class setup5
+    [Migration("20230305091531_setup11")]
+    partial class setup11
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

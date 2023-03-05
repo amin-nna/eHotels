@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Identity;
 
-namespace realEstateWebApp.Areas.Identity.Data;
+namespace eHotels.Areas.Identity.Data;
 
 public class ApplicationUser : IdentityUser
 {

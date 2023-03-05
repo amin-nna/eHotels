@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using realEstateWebApp.Areas.Identity.Data;
+using eHotels.Areas.Identity.Data;
 
 #nullable disable
 
-namespace realEstateWebApp.Migrations
+namespace eHotels.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20221229065701_setup")]
@@ -162,7 +162,7 @@ namespace realEstateWebApp.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("realEstateWebApp.Areas.Identity.Data.ApplicationUser", b =>
+            modelBuilder.Entity("eHotels.Areas.Identity.Data.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -237,7 +237,7 @@ namespace realEstateWebApp.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("realEstateWebApp.Models.BienModel", b =>
+            modelBuilder.Entity("eHotels.Models.BienModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -280,7 +280,7 @@ namespace realEstateWebApp.Migrations
                     b.ToTable("Biens");
                 });
 
-            modelBuilder.Entity("realEstateWebApp.Models.ImageModel", b =>
+            modelBuilder.Entity("eHotels.Models.ImageModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -317,7 +317,7 @@ namespace realEstateWebApp.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("realEstateWebApp.Areas.Identity.Data.ApplicationUser", null)
+                    b.HasOne("eHotels.Areas.Identity.Data.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -326,7 +326,7 @@ namespace realEstateWebApp.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("realEstateWebApp.Areas.Identity.Data.ApplicationUser", null)
+                    b.HasOne("eHotels.Areas.Identity.Data.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -341,7 +341,7 @@ namespace realEstateWebApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("realEstateWebApp.Areas.Identity.Data.ApplicationUser", null)
+                    b.HasOne("eHotels.Areas.Identity.Data.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -350,21 +350,21 @@ namespace realEstateWebApp.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("realEstateWebApp.Areas.Identity.Data.ApplicationUser", null)
+                    b.HasOne("eHotels.Areas.Identity.Data.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("realEstateWebApp.Models.ImageModel", b =>
+            modelBuilder.Entity("eHotels.Models.ImageModel", b =>
                 {
-                    b.HasOne("realEstateWebApp.Models.BienModel", null)
+                    b.HasOne("eHotels.Models.BienModel", null)
                         .WithMany("ImagesDeBienUrl")
                         .HasForeignKey("BienModelId");
                 });
 
-            modelBuilder.Entity("realEstateWebApp.Models.BienModel", b =>
+            modelBuilder.Entity("eHotels.Models.BienModel", b =>
                 {
                     b.Navigation("ImagesDeBienUrl");
                 });

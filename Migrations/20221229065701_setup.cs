@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace realEstateWebApp.Migrations
+namespace eHotels.Migrations
 {
     /// <inheritdoc />
     public partial class setup : Migration

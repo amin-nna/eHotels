@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace realEstateWebApp.Migrations
+namespace eHotels.Migrations
 {
     /// <inheritdoc />
     public partial class setup5 : Migration

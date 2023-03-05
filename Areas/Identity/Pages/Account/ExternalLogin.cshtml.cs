@@ -17,9 +17,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using realEstateWebApp.Areas.Identity.Data;
+using eHotels.Areas.Identity.Data;
 
-namespace realEstateWebApp.Areas.Identity.Pages.Account
+namespace eHotels.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class ExternalLoginModel : PageModel

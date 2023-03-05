@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using realEstateWebApp.Models;
+using eHotels.Models;
 
-namespace realEstateWebApp.Controllers;
+namespace eHotels.Controllers;
 
 public class HomeController : Controller
 {

@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using realEstateWebApp.Areas.Identity.Data;
+using eHotels.Areas.Identity.Data;
 
-namespace realEstateWebApp.Areas.Identity.Pages.Account.Manage
+namespace eHotels.Areas.Identity.Pages.Account.Manage
 {
     public class DeletePersonalDataModel : PageModel
     {

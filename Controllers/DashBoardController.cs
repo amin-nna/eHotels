@@ -2,11 +2,11 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using realEstateWebApp.Areas.Identity.Data;
-using realEstateWebApp.Models;
-using realEstateWebApp.Services;
+using eHotels.Areas.Identity.Data;
+using eHotels.Models;
+using eHotels.Services;
 
-namespace realEstateWebApp.Controllers;
+namespace eHotels.Controllers;
 
 public class DashboardController : Controller
 {
