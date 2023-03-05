@@ -9,11 +9,11 @@ using realEstateWebApp.Areas.Identity.Data;
 
 #nullable disable
 
-namespace realEstateWebApp.Migrations
+namespace eHotels.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230305025041_001")]
-    partial class _001
+    [Migration("20230305034351_InitialDb")]
+    partial class InitialDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
