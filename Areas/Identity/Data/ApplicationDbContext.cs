@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using eHotels.Models;
+using Microsoft.CodeAnalysis.Elfie.Diagnostics;
+using Twilio.TwiML.Voice;
 
 namespace eHotels.Areas.Identity.Data;
 
@@ -25,6 +27,15 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
     //We will define a data sets
     public DbSet<BienModel> Biens { get; set; }
+    public DbSet<HotelChain> HotelChain { get; set; }
+    public DbSet<CentralOffice> CentralOffice { get; set; }
+    public DbSet<Hotel> Hotel { get; set; }
+    public DbSet<HotelPhoneNumber> HotelPhoneNumber { get; set; }
+    public DbSet<Models.Room> Room { get; set; }
+    public DbSet<RoomAmenity> RoomAmenity { get; set; }
+    public DbSet<RoomIssue> RoomIssue { get; set; }
+    public DbSet<Booking> Booking { get; set; }
+    public DbSet<Renting> Renting { get; set; }
     //public DbSet<ImageModel> ImagesBiens { get; set; }
 
 }
