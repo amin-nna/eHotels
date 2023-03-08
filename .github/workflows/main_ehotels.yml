@@ -26,7 +26,7 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish
+        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact to Azure Blob Storage
         uses: azure/CLI@v1
@@ -56,16 +56,12 @@ jobs:
               --destination ${{env.DOTNET_ROOT}}/myapp \
               --source https://ehotels.blob.core.windows.net/$logs \
               --pattern "*"
-      - name: Azure Login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
           
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'ehotels-webapp'
-          slot-name: 'production'
+          app-name: 'eHotels'
+          slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
           package: ${{env.DOTNET_ROOT}}/myapp
