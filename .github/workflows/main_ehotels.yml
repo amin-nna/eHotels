@@ -42,6 +42,7 @@ jobs:
 
   deploy:
     runs-on: windows-latest
+    
 
     needs: build
 
@@ -55,7 +56,11 @@ jobs:
               --destination ${{env.DOTNET_ROOT}}/myapp \
               --source https://ehotels.blob.core.windows.net/$logs \
               --pattern "*"
-
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
