@@ -65,4 +65,4 @@ jobs:
           app-name: 'eHotels'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_001A9CC765DE44BF9597D19F7ECF1771 }}
-          package: .
+          package: ${{env.DOTNET_ROOT}}/myapp 
