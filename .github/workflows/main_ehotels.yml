@@ -42,8 +42,8 @@ jobs:
 
   deploy:
     runs-on: windows-latest
-      @@ -42,10 +48,15 @@ jobs:
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    needs: build
 
     steps:
       - name: Download artifact from Azure Blob Storage
@@ -58,4 +58,9 @@ jobs:
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
-        
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'ehotels-webapp'
+          slot-name: 'production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
+          package: ${{env.DOTNET_ROOT}}/myapp
