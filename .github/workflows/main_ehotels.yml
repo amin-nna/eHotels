@@ -39,6 +39,7 @@ jobs:
             --connection-string "${{ secrets.DefaultEndpointsProtocol }}=https;AccountName=ehotels;AccountKey=rz/AX9r2MOJLAV3crB0U5dIa0E+Vh6q8obmnWs/uZ/DD+w/G5AYUljel8gYFhAJ+1EfhCsa6fg2d+AStMA2R2g==;EndpointSuffix=core.windows.net"
             
     - name: Deploy to Azure Web App
+      id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'eHotels' 
