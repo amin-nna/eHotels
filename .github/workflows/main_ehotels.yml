@@ -38,5 +38,13 @@ jobs:
             --destination-path "/" \
             --connection-string "${{ secrets.DefaultEndpointsProtocol }}=https;AccountName=ehotels;AccountKey=rz/AX9r2MOJLAV3crB0U5dIa0E+Vh6q8obmnWs/uZ/DD+w/G5AYUljel8gYFhAJ+1EfhCsa6fg2d+AStMA2R2g==;EndpointSuffix=core.windows.net"
             
+    - name: Deploy to Azure Web App
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'eHotels' 
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_001A9CC765DE44BF9597D19F7ECF1771 }} 
+        package: ./bin/Debug/net7.0
+        enable-virtual-application: true # set to true if you are deploying to a virtual application, e.g. /site/wwwroot/myapp
+    
     - name: Clean up artifacts
       run: rm -rf ./bin/Debug/net7.0
