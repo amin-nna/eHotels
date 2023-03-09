@@ -31,7 +31,7 @@ jobs:
       - name: Upload artifact to Azure Blob Storage
         uses: azure/CLI@v1
         with:
-          azcliversion: '2.26.2'
+          azcliversion: '2.28.0'
           inlineScript: |
             az storage blob upload-batch \
               --destination https://ehotels.blob.core.windows.net/$logs \
@@ -51,7 +51,7 @@ jobs:
       - name: Download artifact from Azure Blob Storage
         uses: azure/CLI@v1
         with:
-          azcliversion: '2.26.2'
+          azcliversion: '2.28.0'
           inlineScript: |
             az storage blob download-batch \
               --destination ${{env.DOTNET_ROOT}}/eHotels \
