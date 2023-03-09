@@ -28,6 +28,9 @@ jobs:
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/eHotels
 
+      - name: List contents of the published directory
+        run: ls -R ${{env.DOTNET_ROOT}}/eHotels
+  
       - name: Upload artifact to Azure Blob Storage
         uses: azure/CLI@v1
         with:
