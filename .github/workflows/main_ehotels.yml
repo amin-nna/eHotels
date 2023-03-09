@@ -43,7 +43,7 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'eHotels' 
-        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_001A9CC765DE44BF9597D19F7ECF1771 }} 
+        publish-profile: ${{ secrets.PUBLISH_PROFILE }} 
         package: ./bin/Debug/net7.0
         
     
