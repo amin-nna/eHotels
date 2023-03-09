@@ -44,7 +44,7 @@ jobs:
         app-name: 'eHotels' 
         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_001A9CC765DE44BF9597D19F7ECF1771 }} 
         package: ./bin/Debug/net7.0
-        enable-virtual-application: true # set to true if you are deploying to a virtual application, e.g. /site/wwwroot/myapp
+        
     
     - name: Clean up artifacts
       run: rm -rf ./bin/Debug/net7.0
