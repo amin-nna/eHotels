@@ -24,7 +24,7 @@ jobs:
       run: dotnet build --configuration Release
       
     - name: Publish the app
-      run: dotnet publish --configuration Release --output ${{env.DOTNET_ROOT}}/eHotels
+      run: dotnet publish --configuration Release --output ./bin/Debug/net7.0
       
     - name: Upload artifact to Azure Blob Storage
       uses: azure/CLI@v1
@@ -33,10 +33,10 @@ jobs:
         inlineScript: |
           az storage blob upload-batch \
             --destination https://ehotels.blob.core.windows.net/artifact-container \
-            --source ${{env.DOTNET_ROOT}}/eHotels \
+            --source ./bin/Debug/net7.0 \
             --pattern "*" \
             --destination-path "/" \
             --connection-string "${{ secrets.DefaultEndpointsProtocol }}=https;AccountName=ehotels;AccountKey=rz/AX9r2MOJLAV3crB0U5dIa0E+Vh6q8obmnWs/uZ/DD+w/G5AYUljel8gYFhAJ+1EfhCsa6fg2d+AStMA2R2g==;EndpointSuffix=core.windows.net"
             
     - name: Clean up artifacts
-      run: rm -rf ${{env.DOTNET_ROOT}}/eHotels
+      run: rm -rf ./bin/Debug/net7.0
