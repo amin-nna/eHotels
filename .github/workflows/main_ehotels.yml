@@ -34,7 +34,7 @@ jobs:
           azcliversion: '2.28.0'
           inlineScript: |
             az storage blob upload-batch \
-              --destination https://ehotels.blob.core.windows.net/$logs \
+              --destination https://ehotels.blob.core.windows.net/artifact-container \
               --source ${{env.DOTNET_ROOT}}/eHotels \
               --pattern "*" \
               --destination-path "/" \
@@ -55,7 +55,7 @@ jobs:
           inlineScript: |
             az storage blob download-batch \
               --destination ${{env.DOTNET_ROOT}}/eHotels \
-              --source https://ehotels.blob.core.windows.net/$logs \
+              --source https://ehotels.blob.core.windows.net/artifact-container \
               --pattern "*"
           
       - name: Deploy to Azure Web App
