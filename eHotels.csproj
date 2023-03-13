@@ -25,6 +25,7 @@
     <None Remove="Views\Inbox\" />
     <None Remove="Services\" />
     <None Remove="bootstrap" />
+    <None Remove="Userdefineddomains\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.1" />
@@ -49,6 +50,7 @@
     <Folder Include="Services\" />
     <Folder Include="wwwroot\ImagesBiens\" />
     <Folder Include="wwwroot\ImagesBiens\covers\" />
+    <Folder Include="Userdefineddomains\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\ImagesBiens\" />

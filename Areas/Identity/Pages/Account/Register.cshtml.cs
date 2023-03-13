@@ -22,6 +22,7 @@ using eHotels.Areas.Identity.Data;
 using eHotels.Services;
 using System.Diagnostics;
 using Twilio.TwiML.Messaging;
+using eHotels.Userdefineddomains;
 
 namespace eHotels.Areas.Identity.Pages.Account
 {
@@ -33,6 +34,7 @@ namespace eHotels.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        public List<string> Cities { get; private set; }
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
@@ -96,8 +98,6 @@ namespace eHotels.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            
-
             //Custom
             [Required]
             [Display(Name = "PhoneNumber")]
@@ -114,7 +114,6 @@ namespace eHotels.Areas.Identity.Pages.Account
 
             //Custom
             [Required]
-            [Display(Name = "City")]
             public string City { get; set; }
 
             //Custom
@@ -149,11 +148,13 @@ namespace eHotels.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
         }
 
-
+       
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            Cities = await CityProvider.GetCitiesInCanadaAsync();
+            Cities.Sort();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -172,8 +173,10 @@ namespace eHotels.Areas.Identity.Pages.Account
                 user.City = Input.City;
                 user.Province = Input.Province;
                 user.PostalCode = Input.PostalCode;
+
                 //We configure phone country code and phone number
                 user.PhoneNumber = Input.PhoneNumber;
+
                 Debug.WriteLine(Input.PhoneNumber);
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
