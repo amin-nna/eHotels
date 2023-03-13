@@ -105,6 +105,7 @@ namespace eHotels.Areas.Identity.Pages.Account
 
             [Required]
             [Display(Name = "SIN")]
+            [RegularExpression(@"^\d{3}-\d{3}-\d{3}$", ErrorMessage = "Please enter a valid Canadian SIN number in the format XXX-XXX-XXX.")]
             public string SIN { get; set; }
 
             //Custom
@@ -124,6 +125,7 @@ namespace eHotels.Areas.Identity.Pages.Account
             //Custom
             [Required]
             [Display(Name = "PostalCode")]
+            [RegularExpression(@"^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$", ErrorMessage = "Please enter a valid Canadian postal code in the format X1X 1X1.")]
             public string PostalCode { get; set; }
 
 
