@@ -21,7 +21,6 @@ public class ApplicationUser : IdentityUser
     public string Street { get; set; }
 
     [Required]
-    //[EnumDataType(typeof(CanadianCity), ErrorMessage = "Please enter a valid city in Canada.")]
     public string City { get; set; }
 
     [Required]
@@ -33,18 +32,6 @@ public class ApplicationUser : IdentityUser
 
 }
 
-public enum CanadianCity
-{
-    Toronto,
-    Montreal,
-    Vancouver,
-    Calgary,
-    Edmonton,
-    Ottawa,
-    Quebec,
-    Winnipeg,
-    Hamilton
-}
 
 public enum CanadianProvince
 {

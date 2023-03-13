@@ -41,7 +41,6 @@
             </div>
 
             <div class="form-floating mb-3">
-                @Html.LabelFor(m => m.Input.City) 
                 @Html.DropDownListFor(m => m.Input.City, new SelectList(Model.Cities), "Select a city", new { @class = "form-control", autocomplete = "city", aria_required = "true" })
                 <span asp-validation-for="Input.City" class="text-danger"></span>
             </div>
