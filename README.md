@@ -2,7 +2,6 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>e-Hotels</title>
 </head>
 <body>
   <h1>eHotels</h1>
