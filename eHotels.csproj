@@ -21,31 +21,28 @@
     <None Remove="Areas\Identity\Data\" />
     <None Remove="Twilio.AspNet.Core" />
     <None Remove="Views\Dahsboard\" />
-    <None Remove="Views\Sell\" />
     <None Remove="Views\Inbox\" />
     <None Remove="Services\" />
     <None Remove="bootstrap" />
     <None Remove="Userdefineddomains\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.1">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.4">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.1" />
     <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.5" />
     <PackageReference Include="Twilio.AspNet.Core" Version="7.0.0" />
     <PackageReference Include="bootstrap" Version="5.2.3" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Identity\Data\" />
-    <Folder Include="Views\Dashboard\" />
-    <Folder Include="Views\Sell\" />
     <Folder Include="Views\Inbox\" />
     <Folder Include="Services\" />
     <Folder Include="wwwroot\ImagesBiens\" />

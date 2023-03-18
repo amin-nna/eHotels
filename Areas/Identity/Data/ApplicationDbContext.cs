@@ -23,19 +23,22 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         // For example, you can rename the ASP.NET Identity table names and more.
         // Add your customizations after calling base.OnModelCreating(builder);
         builder.ApplyConfiguration(new ApplicationUserEntityConfiguration());
+        builder.Entity<RoomAmenities>()
+                .HasKey(ra => new { ra.RoomNumber, ra.Amenity });
+        builder.Entity<RoomIssues>()
+                .HasKey(ra => new { ra.RoomNumber, ra.Problem });
     }
 
     //We will define a data sets
-    public DbSet<BienModel> Biens { get; set; }
-    public DbSet<HotelChain> HotelChain { get; set; }
-    public DbSet<CentralOffice> CentralOffice { get; set; }
-    public DbSet<Hotel> Hotel { get; set; }
-    public DbSet<HotelPhoneNumber> HotelPhoneNumber { get; set; }
-    public DbSet<Models.Room> Room { get; set; }
-    public DbSet<RoomAmenity> RoomAmenity { get; set; }
-    public DbSet<RoomIssue> RoomIssue { get; set; }
-    public DbSet<Booking> Booking { get; set; }
-    public DbSet<Renting> Renting { get; set; }
+    public DbSet<HotelChains> HotelChain { get; set; }
+    public DbSet<CentralOffices> CentralOffice { get; set; }
+    public DbSet<Hotels> Hotel { get; set; }
+    public DbSet<HotelPhoneNumbers> HotelPhoneNumber { get; set; }
+    public DbSet<Models.Rooms> Room { get; set; }
+    public DbSet<RoomAmenities> RoomAmenity { get; set; }
+    public DbSet<RoomIssues> RoomIssue { get; set; }
+    public DbSet<Bookings> Booking { get; set; }
+    public DbSet<Rentings> Renting { get; set; }
     //public DbSet<ImageModel> ImagesBiens { get; set; }
 
 }
