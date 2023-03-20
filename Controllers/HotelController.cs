@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using eHotels.Areas.Identity.Data;
+using Microsoft.AspNetCore.Authorization;
 using eHotels.Models;
 
 namespace eHotels.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class HotelController : Controller
     {
         private readonly ApplicationDbContext _context;
