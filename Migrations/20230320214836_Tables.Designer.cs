@@ -12,15 +12,15 @@ using eHotels.Areas.Identity.Data;
 namespace eHotels.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230317205435_Creating_Tables")]
-    partial class CreatingTables
+    [Migration("20230320214836_Tables")]
+    partial class Tables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.1")
+                .HasAnnotation("ProductVersion", "7.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -262,51 +262,7 @@ namespace eHotels.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("eHotels.Models.BienModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Adresse")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("IdUser")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ImageDeBienUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Prix")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Superficie")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TypeDeBien")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TypeDeTransaction")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Biens");
-                });
-
-            modelBuilder.Entity("eHotels.Models.Booking", b =>
+            modelBuilder.Entity("eHotels.Models.Bookings", b =>
                 {
                     b.Property<int>("BookingID")
                         .ValueGeneratedOnAdd()
@@ -330,7 +286,7 @@ namespace eHotels.Migrations
                     b.ToTable("Booking");
                 });
 
-            modelBuilder.Entity("eHotels.Models.CentralOffice", b =>
+            modelBuilder.Entity("eHotels.Models.CentralOffices", b =>
                 {
                     b.Property<int>("Office_ID")
                         .ValueGeneratedOnAdd()
@@ -363,7 +319,56 @@ namespace eHotels.Migrations
                     b.ToTable("CentralOffice");
                 });
 
-            modelBuilder.Entity("eHotels.Models.Hotel", b =>
+            modelBuilder.Entity("eHotels.Models.HotelChains", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Hotels")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Province")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Name");
+
+                    b.ToTable("HotelChain");
+                });
+
+            modelBuilder.Entity("eHotels.Models.HotelPhoneNumbers", b =>
+                {
+                    b.Property<string>("ContactName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Hotel_Hotel_ID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ContactName");
+
+                    b.ToTable("HotelPhoneNumber");
+                });
+
+            modelBuilder.Entity("eHotels.Models.Hotels", b =>
                 {
                     b.Property<int>("Hotel_ID")
                         .ValueGeneratedOnAdd()
@@ -403,82 +408,7 @@ namespace eHotels.Migrations
                     b.ToTable("Hotel");
                 });
 
-            modelBuilder.Entity("eHotels.Models.HotelChains", b =>
-                {
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Hotels")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Province")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Rating")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Street")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Name");
-
-                    b.ToTable("HotelChains");
-                });
-
-            modelBuilder.Entity("eHotels.Models.HotelPhoneNumber", b =>
-                {
-                    b.Property<string>("ContactName")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Hotel_Hotel_ID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ContactName");
-
-                    b.ToTable("HotelPhoneNumber");
-                });
-
-            modelBuilder.Entity("eHotels.Models.ImageModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("BienModelId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BienModelId");
-
-                    b.ToTable("ImageModel");
-                });
-
-            modelBuilder.Entity("eHotels.Models.Renting", b =>
+            modelBuilder.Entity("eHotels.Models.Rentings", b =>
                 {
                     b.Property<int>("RentingID")
                         .ValueGeneratedOnAdd()
@@ -502,7 +432,45 @@ namespace eHotels.Migrations
                     b.ToTable("Renting");
                 });
 
-            modelBuilder.Entity("eHotels.Models.Room", b =>
+            modelBuilder.Entity("eHotels.Models.RoomAmenities", b =>
+                {
+                    b.Property<int>("RoomNumber")
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
+
+                    b.Property<string>("Amenity")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnOrder(1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("RoomNumber", "Amenity");
+
+                    b.ToTable("RoomAmenity");
+                });
+
+            modelBuilder.Entity("eHotels.Models.RoomIssues", b =>
+                {
+                    b.Property<int>("RoomNumber")
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
+
+                    b.Property<string>("Problem")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnOrder(1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("RoomNumber", "Problem");
+
+                    b.ToTable("RoomIssue");
+                });
+
+            modelBuilder.Entity("eHotels.Models.Rooms", b =>
                 {
                     b.Property<int>("RoomNumber")
                         .ValueGeneratedOnAdd()
@@ -534,44 +502,6 @@ namespace eHotels.Migrations
                     b.HasKey("RoomNumber");
 
                     b.ToTable("Room");
-                });
-
-            modelBuilder.Entity("eHotels.Models.RoomAmenity", b =>
-                {
-                    b.Property<int>("RoomNumber")
-                        .HasColumnType("int")
-                        .HasColumnOrder(0);
-
-                    b.Property<string>("Amenity")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnOrder(1);
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("RoomNumber", "Amenity");
-
-                    b.ToTable("RoomAmenity");
-                });
-
-            modelBuilder.Entity("eHotels.Models.RoomIssue", b =>
-                {
-                    b.Property<int>("RoomNumber")
-                        .HasColumnType("int")
-                        .HasColumnOrder(0);
-
-                    b.Property<string>("Problem")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnOrder(1);
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("RoomNumber", "Problem");
-
-                    b.ToTable("RoomIssue");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -623,18 +553,6 @@ namespace eHotels.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("eHotels.Models.ImageModel", b =>
-                {
-                    b.HasOne("eHotels.Models.BienModel", null)
-                        .WithMany("ImagesDeBienUrl")
-                        .HasForeignKey("BienModelId");
-                });
-
-            modelBuilder.Entity("eHotels.Models.BienModel", b =>
-                {
-                    b.Navigation("ImagesDeBienUrl");
                 });
 #pragma warning restore 612, 618
         }

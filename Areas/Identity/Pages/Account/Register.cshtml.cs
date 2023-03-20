@@ -33,6 +33,7 @@ namespace eHotels.Areas.Identity.Pages.Account
         private readonly IUserStore<ApplicationUser> _userStore;
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IEmailSender _emailSender;
         public List<string> Cities { get; private set; }
 
@@ -41,12 +42,14 @@ namespace eHotels.Areas.Identity.Pages.Account
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
+            RoleManager<IdentityRole> roleManager,
             IEmailSender emailSender)
         {
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
+            _roleManager = roleManager; 
             _logger = logger;
             _emailSender = emailSender;
         }
@@ -148,6 +151,9 @@ namespace eHotels.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            public string Role { get; set; }
         }
 
        
@@ -176,8 +182,11 @@ namespace eHotels.Areas.Identity.Pages.Account
                 user.Province = Input.Province;
                 user.PostalCode = Input.PostalCode;
 
-                //We configure phone country code and phone number
-                user.PhoneNumber = Input.PhoneNumber;
+
+                
+
+                    //We configure phone country code and phone number
+                    user.PhoneNumber = Input.PhoneNumber;
 
                 Debug.WriteLine(Input.PhoneNumber);
 
@@ -185,10 +194,31 @@ namespace eHotels.Areas.Identity.Pages.Account
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 
                 var result = await _userManager.CreateAsync(user, Input.Password);
-
+                
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    //CLIENT REGISTERING
+                    // Define a new role name
+                    string roleClient = Input.Role;
+
+                    // Check if the role exists
+                    if (await _roleManager.RoleExistsAsync(roleClient)==false)
+                    {
+                        // The role already exists, do nothing
+                        var roleTemp = new IdentityRole(roleClient);
+                        await _roleManager.CreateAsync(roleTemp);
+                    }
+
+                    // Create the role
+                    
+                    var role = _roleManager.FindByNameAsync(roleClient).Result;
+
+                    if (role != null)
+                    {
+                        IdentityResult roleresult = await _userManager.AddToRoleAsync(user, role.Name);
+                    }
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
