@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using eHotels.Areas.Identity.Data;
 using Microsoft.AspNetCore.Authorization;
 using eHotels.Models;
+using System.Net;
+using Newtonsoft.Json;
 
 namespace eHotels.Controllers
 {
@@ -15,10 +17,12 @@ namespace eHotels.Controllers
     public class HotelController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public HotelController(ApplicationDbContext context)
+        public HotelController(ApplicationDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         // GET: Hotel
@@ -161,5 +165,78 @@ namespace eHotels.Controllers
         {
           return (_context.Hotel?.Any(e => e.Hotel_ID == id)).GetValueOrDefault();
         }
+
+        public IActionResult FilterHotels(string address, int perimeter, string unit)
+        {
+            var hotels = _context.Hotel.ToList();
+            var filteredHotels = new List<Hotels>();
+
+            foreach (var hotel in hotels)
+            {
+                var fullAddress = hotel.Street + ", " + hotel.City + ", " + hotel.Province + " " + hotel.PostalCode;
+                var distance = CalculateDistance(address, fullAddress, unit);
+
+                if (distance <= perimeter)
+                {
+                    filteredHotels.Add(hotel);
+                }
+            }
+
+            return View(filteredHotels);
+        }
+
+        private double CalculateDistance(string originAddress, string destinationAddress, string unit)
+        {
+            var requestUri = string.Format("https://maps.googleapis.com/maps/api/distancematrix/json?origins={0}&destinations={1}&key={2}",
+                originAddress, destinationAddress, _configuration.GetValue<string>("GoogleMapsApiKey"));
+
+            var request = WebRequest.Create(requestUri);
+            var response = request.GetResponse();
+            var json = string.Empty;
+
+            using (var stream = response.GetResponseStream())
+            {
+                using (var reader = new StreamReader(stream))
+                {
+                    json = reader.ReadToEnd();
+                }
+            }
+
+            var matrix = JsonConvert.DeserializeObject<DistanceMatrix>(json);
+            var distance = matrix.Rows.First().Elements.First().Distance.Value;
+
+            if (unit == "km")
+            {
+                distance /= 1000;
+            }
+            else if (unit == "mi")
+            {
+                distance /= 1609.34;
+            }
+
+            return distance;
+        }
+
+        public class DistanceMatrix
+        {
+            public List<Row> Rows { get; set; }
+        }
+
+        public class Row
+        {
+            public List<Element> Elements { get; set; }
+        }
+
+        public class Element
+        {
+            public Distance Distance { get; set; }
+        }
+
+        public class Distance
+        {
+            public double Value { get; set; }
+        }
+
+
     }
 }
