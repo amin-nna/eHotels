@@ -17,11 +17,11 @@ else
             <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.Hotel_chainName_ID)</h5>
+                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
                         <p class="card-text">@Html.DisplayFor(modelItem => item.Street)</p>
                         <p class="card-text">@Html.DisplayFor(modelItem => item.City), @Html.DisplayFor(modelItem => item.Province) @Html.DisplayFor(modelItem => item.PostalCode)</p>
-                        <p class="card-text"><a href="mailto:@Html.DisplayFor(modelItem => item.Email)">@Html.DisplayFor(modelItem => item.Email)</a></p>
-                        <p class="card-text">@Html.DisplayFor(modelItem => item.Rooms) rooms</p>
+                        <p class="card-text"><a href="mailto:@Html.DisplayFor(modelItem => item.Email)"> @Html.DisplayFor(modelItem => item.Email)</a></p>
+                        <p class="card-text">@Html.DisplayFor(modelItem => item.RoomsCount) rooms</p>
                         <div class="d-flex justify-content-end">
                             <a class="btn btn-secondary me-2" asp-action="Details" asp-route-id="@item.Hotel_ID">Details</a>
                             <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Hotel_ID">Edit</a>
