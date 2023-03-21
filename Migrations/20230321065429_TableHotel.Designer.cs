@@ -12,8 +12,8 @@ using eHotels.Areas.Identity.Data;
 namespace eHotels.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230320214836_Tables")]
-    partial class Tables
+    [Migration("20230321065429_TableHotel")]
+    partial class TableHotel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -370,11 +370,8 @@ namespace eHotels.Migrations
 
             modelBuilder.Entity("eHotels.Models.Hotels", b =>
                 {
-                    b.Property<int>("Hotel_ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Hotel_ID"));
+                    b.Property<string>("Hotel_ID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -385,6 +382,10 @@ namespace eHotels.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Hotel_chainName_ID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

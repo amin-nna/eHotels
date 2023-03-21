@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace eHotels.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator, Employee")]
     public class HotelController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -34,7 +34,7 @@ namespace eHotels.Controllers
         }
 
         // GET: Hotel/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string? id)
         {
             if (id == null || _context.Hotel == null)
             {
@@ -54,6 +54,8 @@ namespace eHotels.Controllers
         // GET: Hotel/Create
         public IActionResult Create()
         {
+            ViewBag.HotelChainList = _context.HotelChain.Select(h => h.Name).ToList();
+
             return View();
         }
 
@@ -62,10 +64,14 @@ namespace eHotels.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Hotel_ID,Hotel_chainName_ID,Street,City,Province,PostalCode,Email,Rooms")] Hotels hotels)
+        public async Task<IActionResult> Create([Bind("Hotel_ID,Hotel_chainName_ID,Name,Street,City,Province,PostalCode,Email,Rooms")] Hotels hotels)
         {
+            ViewBag.HotelChainList = _context.HotelChain.Select(h => h.Name).ToList();
+
+
             if (ModelState.IsValid)
             {
+                hotels.Hotel_ID = hotels.Hotel_chainName_ID + " " + hotels.Name + " " + hotels.Street;
                 _context.Add(hotels);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -94,7 +100,7 @@ namespace eHotels.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Hotel_ID,Hotel_chainName_ID,Street,City,Province,PostalCode,Email,Rooms")] Hotels hotels)
+        public async Task<IActionResult> Edit(string id, [Bind("Hotel_ID,Hotel_chainName_ID,Street,City,Province,PostalCode,Email,Rooms")] Hotels hotels)
         {
             if (id != hotels.Hotel_ID)
             {
@@ -125,7 +131,7 @@ namespace eHotels.Controllers
         }
 
         // GET: Hotel/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string? id)
         {
             if (id == null || _context.Hotel == null)
             {
@@ -161,7 +167,7 @@ namespace eHotels.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool HotelsExists(int id)
+        private bool HotelsExists(string id)
         {
           return (_context.Hotel?.Any(e => e.Hotel_ID == id)).GetValueOrDefault();
         }

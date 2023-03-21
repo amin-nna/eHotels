@@ -50,6 +50,7 @@ namespace eHotels.Controllers
         // GET: Room/Create
         public IActionResult Create()
         {
+            ViewBag.HotelList = _context.Hotel.Select(h => h.Hotel_ID).ToList();
             return View();
         }
 

@@ -14,7 +14,10 @@ namespace eHotels.Models
     {
         [Key]
         [Required]
-        public int Hotel_ID { get; set; }
+        public string Hotel_ID { get; set; }
+
+        [Required]
+        public string Name { get; set; }
 
         [Required]
         public string Hotel_chainName_ID { get; set; }
