@@ -25,6 +25,9 @@
     <None Remove="Services\" />
     <None Remove="bootstrap" />
     <None Remove="Userdefineddomains\" />
+    <None Remove="Views\Administrator\" />
+    <None Remove="Views\Client\" />
+    <None Remove="Views\Employee\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.4" />
@@ -48,9 +51,15 @@
     <Folder Include="wwwroot\ImagesBiens\" />
     <Folder Include="wwwroot\ImagesBiens\covers\" />
     <Folder Include="Userdefineddomains\" />
+    <Folder Include="Views\Administrator\" />
+    <Folder Include="Views\Client\" />
+    <Folder Include="Views\Employee\" />
+    <Folder Include="Views\Client\" />
+    <Folder Include="Views\Employee\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\ImagesBiens\" />
     <Content Remove="wwwroot\ImagesBiens\covers\" />
+    <Content Remove="Views\Users\Employee.cshtml" />
   </ItemGroup>
 </Project>

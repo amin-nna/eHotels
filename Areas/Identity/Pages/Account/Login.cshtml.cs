@@ -116,7 +116,23 @@ namespace eHotels.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+
+                    // Get the authenticated user's roles
+                    var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+                    var roles = await _signInManager.UserManager.GetRolesAsync(user);
+
+                    // Redirect the user based on their role
+                    switch (roles.FirstOrDefault())
+                    {
+                        case "Administrator":
+                            return RedirectToAction("Index", "Administrator");
+                        case "Employee":
+                            return RedirectToAction("Index", "Employee");
+                        case "Client":
+                            return RedirectToAction("Index", "Client");
+                        default:
+                            return LocalRedirect(returnUrl);
+                    }
                 }
                 if (result.RequiresTwoFactor)
                 {
