@@ -61,6 +61,8 @@ namespace eHotels.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Street,City,Province,PostalCode,HotelsCount")] HotelChains hotelChains)
         {
+            ModelState.Remove("Hotels");
+            ModelState.Remove("CentralOffices");
             if (ModelState.IsValid)
             {
                 _context.Add(hotelChains);
@@ -97,7 +99,8 @@ namespace eHotels.Controllers
             {
                 return NotFound();
             }
-
+            ModelState.Remove("Hotels");
+            ModelState.Remove("CentralOffices");
             if (ModelState.IsValid)
             {
                 try

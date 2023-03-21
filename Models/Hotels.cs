@@ -42,10 +42,13 @@ namespace eHotels.Models
         [Required]
         public int RoomsCount { get; set; }
 
+        [BindNever]
         public virtual HotelChains HotelChain { get; set; }
 
+        [BindNever]
         public virtual ICollection<Rooms> Rooms { get; set; }
 
+        [BindNever]
         public virtual ICollection<HotelPhoneNumbers> HotelPhoneNumbers { get; set; }
     }
 

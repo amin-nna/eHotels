@@ -54,10 +54,12 @@
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="row mb-3">
+    <div class="col-12">
+        <a href="@Url.Action("Index", "HotelChain")" class="btn btn-primary">Hotel Chains</a>
+    </div>
 </div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -1,0 +1,30 @@
+@model IEnumerable<eHotels.Models.CentralOffices>
+
+@if (!Model.Any())
+{
+    <p>No Central offices found.</p>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.HotelChain.Name)</h5>
+                        <p class="card-text">@Html.DisplayFor(modelItem => item.Street)</p>
+                        <p class="card-text">@Html.DisplayFor(modelItem => item.City), @Html.DisplayFor(modelItem => item.Province) @Html.DisplayFor(modelItem => item.PostalCode)</p>
+                        <div class="d-flex justify-content-end">
+                            <a class="btn btn-secondary me-2" asp-action="Details" asp-route-id="@item.Office_ID">Details</a>
+                            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Office_ID">Edit</a>
+                            <form asp-action="Delete" asp-route-id="@item.Office_ID" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-danger ms-2">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

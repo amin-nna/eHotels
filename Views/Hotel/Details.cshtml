@@ -61,7 +61,11 @@
                 </div>
                 <div class="card-footer">
                     <a asp-action="Edit" asp-route-id="@Model?.Hotel_ID" class="btn btn-primary">Edit</a>
-                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <a href="@Url.Action("Index", "HotelChain")" class="btn btn-primary">Hotel Chains</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,80 +1,40 @@
 @model eHotels.Models.HotelChains
+@using Microsoft.AspNetCore.Mvc
 
 @{
     ViewData["Title"] = "Details";
 }
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <div class="container py-4">
-    <h1 class="text-center mb-4">Hotel Chain Details</h1>
+    <h1 class="mb-4">@Model.Name</h1>
 
-    <div class="card mb-4">
-        <div class="card-body">
-            <h4 class="card-title">Address</h4>
-            <hr />
+    <div class="container py-4">
+        <script>
+    $(function() {
+        var name = "@Model.Name";
+        $("#centralOffices-container").load("/CentralOffice/IndexChain?name=" + name);
+    });
+        </script>
 
-            <div class="row">
-                <div class="col-sm-2">
-                    <dt>Street:</dt>
-                </div>
-                <div class="col-sm-10">
-                    <dd>@Html.DisplayFor(model => model.Street)</dd>
-                </div>
+        <h3 class="text-center mb-4">Central Offices</h3>
+        <div id="centralOffices-container"></div>
 
-                <div class="col-sm-2">
-                    <dt>City:</dt>
-                </div>
-                <div class="col-sm-10">
-                    <dd>@Html.DisplayFor(model => model.City)</dd>
-                </div>
-
-                <div class="col-sm-2">
-                    <dt>Province:</dt>
-                </div>
-                <div class="col-sm-10">
-                    <dd>@Html.DisplayFor(model => model.Province)</dd>
-                </div>
-
-                <div class="col-sm-2">
-                    <dt>Postal Code:</dt>
-                </div>
-                <div class="col-sm-10">
-                    <dd>@Html.DisplayFor(model => model.PostalCode)</dd>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card mb-4">
-        <div class="card-body">
-            <h4 class="card-title">Hotel Chain Information</h4>
-            <hr />
-
-            <dl class="row">
-                <div class="col-sm-2">
-                    <dt>Hotels:</dt>
-                </div>
-                <div class="col-sm-10">
-                    <dd>@Html.DisplayFor(model => model.Hotels)</dd>
-                </div>
-
-                <div class="col-sm-2">
-                    <dt>Rating:</dt>
-                </div>
-                <div class="col-sm-10">
-                    <dd class="col-sm-10">
-                        @for (int i = 0; i < Model.Rating; i++)
-                        {
-                            <i class="fas fa-star"></i>
-                        }
-                    </dd>
-                </div>
-            </dl>
-        </div>
-    </div>
-
-    <div class="text-center">
-        <a asp-action="Edit" asp-route-id="@Model?.Name" class="btn btn-primary mr-2">Edit</a>
-        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        <script>
+    $(function() {
+        var name = "@Model.Name";
+        $("#hotels-container").load("/Hotel/IndexChain?name=" + name);
+    });
+        </script>
+        <h3 class="mb-4">Hotels</h3>
+        <div id="hotels-container"> </div>
     </div>
 </div>
+
+<div class="row mb-3">
+    <div class="col-12">
+        <a href="@Url.Action("Index", "HotelChain")" class="btn btn-primary">Hotel Chains</a>
+    </div>
+</div>
+

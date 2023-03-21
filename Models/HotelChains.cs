@@ -31,8 +31,10 @@ namespace eHotels.Models
         [Required]
         public int HotelsCount { get; set; }
 
+        [BindNever]
         public virtual ICollection<Hotels> Hotels { get; set; }
 
+        [BindNever]
         public virtual ICollection<CentralOffices> CentralOffices { get; set; }
 
         public int? Rating { get; set; }

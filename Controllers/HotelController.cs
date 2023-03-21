@@ -33,6 +33,17 @@ namespace eHotels.Controllers
                           Problem("Entity set 'ApplicationDbContext.Hotel'  is null.");
         }
 
+        public async Task<IActionResult> IndexChain(string name)
+        {
+            var hotels = await _context.Hotel
+                .Where(co => co.Hotel_chainName_ID == name)
+                .ToListAsync();
+
+
+            return PartialView(hotels);
+        }
+
+
         // GET: Hotel/Details/5
         public async Task<IActionResult> Details(string? id)
         {
@@ -68,7 +79,10 @@ namespace eHotels.Controllers
         {
             ViewBag.HotelChainList = _context.HotelChain.Select(h => h.Name).ToList();
 
-
+            ModelState.Remove("HotelChain");
+            ModelState.Remove("Rooms");
+            ModelState.Remove("HotelPhoneNumbers");
+            ModelState.Remove("Hotel_ID");
             if (ModelState.IsValid)
             {
                 hotels.Hotel_ID = hotels.Hotel_chainName_ID + " " + hotels.Name + " " + hotels.Street;

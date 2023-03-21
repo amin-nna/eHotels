@@ -23,6 +23,7 @@ namespace eHotels.Models
         [Required]
         public string Hotel_Hotel_ID { get; set; }
 
+        [BindNever]
         public virtual Hotels Hotel { get; set; }
     }
 

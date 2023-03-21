@@ -21,8 +21,6 @@ namespace eHotels.Models
         [Required]
         public string Hotel_ID { get; set; }
 
-        
-
         [Required]
         public int Price { get; set; }
 
@@ -38,10 +36,13 @@ namespace eHotels.Models
 
         public string? View { get; set; }
 
+        [BindNever]
         public virtual Hotels Hotel { get; set; }
 
+        [BindNever]
         public virtual ICollection<RoomIssues> RoomIssues { get; set; }
 
+        [BindNever]
         public virtual ICollection<RoomAmenities> RoomAmenities { get; set; }
 
     }

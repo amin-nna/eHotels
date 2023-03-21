@@ -20,6 +20,7 @@ namespace eHotels.Models
 
         public string Description { get; set; }
 
+        [BindNever]
         public virtual Rooms Room { get; set; }
     }
 
