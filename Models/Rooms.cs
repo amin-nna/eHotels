@@ -21,6 +21,8 @@ namespace eHotels.Models
         [Required]
         public string Hotel_ID { get; set; }
 
+        
+
         [Required]
         public int Price { get; set; }
 
@@ -35,6 +37,12 @@ namespace eHotels.Models
         public bool Extendable { get; set; }
 
         public string? View { get; set; }
+
+        public virtual Hotels Hotel { get; set; }
+
+        public virtual ICollection<RoomIssues> RoomIssues { get; set; }
+
+        public virtual ICollection<RoomAmenities> RoomAmenities { get; set; }
 
     }
 

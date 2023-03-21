@@ -20,6 +20,8 @@ namespace eHotels.Models
         [ForeignKey("HotelChains")]
         public string HotelChain_Name { get; set; }
 
+        public virtual HotelChains HotelChain { get; set; }
+
         [Required]
         public string Street { get; set; }
 

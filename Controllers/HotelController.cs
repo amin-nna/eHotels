@@ -64,7 +64,7 @@ namespace eHotels.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Hotel_ID,Hotel_chainName_ID,Name,Street,City,Province,PostalCode,Email,Rooms")] Hotels hotels)
+        public async Task<IActionResult> Create([Bind("Hotel_ID,Hotel_chainName_ID,Name,Street,City,Province,PostalCode,Email,RoomsCount")] Hotels hotels)
         {
             ViewBag.HotelChainList = _context.HotelChain.Select(h => h.Name).ToList();
 
@@ -100,7 +100,7 @@ namespace eHotels.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Hotel_ID,Hotel_chainName_ID,Street,City,Province,PostalCode,Email,Rooms")] Hotels hotels)
+        public async Task<IActionResult> Edit(string id, [Bind("Hotel_ID,Hotel_chainName_ID,Street,City,Province,PostalCode,Email,RoomsCount")] Hotels hotels)
         {
             if (id != hotels.Hotel_ID)
             {

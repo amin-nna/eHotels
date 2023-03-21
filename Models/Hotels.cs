@@ -40,8 +40,13 @@ namespace eHotels.Models
         public string Email { get; set; }
 
         [Required]
-        public int Rooms { get; set; }
+        public int RoomsCount { get; set; }
 
+        public virtual HotelChains HotelChain { get; set; }
+
+        public virtual ICollection<Rooms> Rooms { get; set; }
+
+        public virtual ICollection<HotelPhoneNumbers> HotelPhoneNumbers { get; set; }
     }
 
 

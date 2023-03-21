@@ -12,8 +12,8 @@ using eHotels.Areas.Identity.Data;
 namespace eHotels.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230321065429_TableHotel")]
-    partial class TableHotel
+    [Migration("20230321080659_migration001")]
+    partial class migration001
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -300,7 +300,7 @@ namespace eHotels.Migrations
 
                     b.Property<string>("HotelChain_Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PostalCode")
                         .IsRequired()
@@ -316,6 +316,8 @@ namespace eHotels.Migrations
 
                     b.HasKey("Office_ID");
 
+                    b.HasIndex("HotelChain_Name");
+
                     b.ToTable("CentralOffice");
                 });
 
@@ -328,7 +330,7 @@ namespace eHotels.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Hotels")
+                    b.Property<int>("HotelsCount")
                         .HasColumnType("int");
 
                     b.Property<string>("PostalCode")
@@ -356,14 +358,17 @@ namespace eHotels.Migrations
                     b.Property<string>("ContactName")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("Hotel_Hotel_ID")
-                        .HasColumnType("int");
+                    b.Property<string>("Hotel_Hotel_ID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ContactName");
+
+                    b.HasIndex("Hotel_Hotel_ID");
 
                     b.ToTable("HotelPhoneNumber");
                 });
@@ -383,7 +388,7 @@ namespace eHotels.Migrations
 
                     b.Property<string>("Hotel_chainName_ID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -397,7 +402,7 @@ namespace eHotels.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Rooms")
+                    b.Property<int>("RoomsCount")
                         .HasColumnType("int");
 
                     b.Property<string>("Street")
@@ -405,6 +410,8 @@ namespace eHotels.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Hotel_ID");
+
+                    b.HasIndex("Hotel_chainName_ID");
 
                     b.ToTable("Hotel");
                 });
@@ -492,7 +499,7 @@ namespace eHotels.Migrations
 
                     b.Property<string>("Hotel_ID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Price")
                         .HasColumnType("int");
@@ -501,6 +508,8 @@ namespace eHotels.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RoomNumber");
+
+                    b.HasIndex("Hotel_ID");
 
                     b.ToTable("Room");
                 });
@@ -554,6 +563,93 @@ namespace eHotels.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("eHotels.Models.CentralOffices", b =>
+                {
+                    b.HasOne("eHotels.Models.HotelChains", "HotelChain")
+                        .WithMany("CentralOffices")
+                        .HasForeignKey("HotelChain_Name")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("HotelChain");
+                });
+
+            modelBuilder.Entity("eHotels.Models.HotelPhoneNumbers", b =>
+                {
+                    b.HasOne("eHotels.Models.Hotels", "Hotel")
+                        .WithMany("HotelPhoneNumbers")
+                        .HasForeignKey("Hotel_Hotel_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Hotel");
+                });
+
+            modelBuilder.Entity("eHotels.Models.Hotels", b =>
+                {
+                    b.HasOne("eHotels.Models.HotelChains", "HotelChain")
+                        .WithMany("Hotels")
+                        .HasForeignKey("Hotel_chainName_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("HotelChain");
+                });
+
+            modelBuilder.Entity("eHotels.Models.RoomAmenities", b =>
+                {
+                    b.HasOne("eHotels.Models.Rooms", "Room")
+                        .WithMany("RoomAmenities")
+                        .HasForeignKey("RoomNumber")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("eHotels.Models.RoomIssues", b =>
+                {
+                    b.HasOne("eHotels.Models.Rooms", "Room")
+                        .WithMany("RoomIssues")
+                        .HasForeignKey("RoomNumber")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("eHotels.Models.Rooms", b =>
+                {
+                    b.HasOne("eHotels.Models.Hotels", "Hotel")
+                        .WithMany("Rooms")
+                        .HasForeignKey("Hotel_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Hotel");
+                });
+
+            modelBuilder.Entity("eHotels.Models.HotelChains", b =>
+                {
+                    b.Navigation("CentralOffices");
+
+                    b.Navigation("Hotels");
+                });
+
+            modelBuilder.Entity("eHotels.Models.Hotels", b =>
+                {
+                    b.Navigation("HotelPhoneNumbers");
+
+                    b.Navigation("Rooms");
+                });
+
+            modelBuilder.Entity("eHotels.Models.Rooms", b =>
+                {
+                    b.Navigation("RoomAmenities");
+
+                    b.Navigation("RoomIssues");
                 });
 #pragma warning restore 612, 618
         }

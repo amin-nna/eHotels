@@ -29,7 +29,11 @@ namespace eHotels.Models
         public string PostalCode { get; set; }
 
         [Required]
-        public int Hotels { get; set; }
+        public int HotelsCount { get; set; }
+
+        public virtual ICollection<Hotels> Hotels { get; set; }
+
+        public virtual ICollection<CentralOffices> CentralOffices { get; set; }
 
         public int? Rating { get; set; }
     }

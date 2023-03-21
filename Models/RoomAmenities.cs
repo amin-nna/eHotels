@@ -22,6 +22,8 @@ namespace eHotels.Models
 
         public string Description { get; set; }
 
+        public virtual Rooms Room { get; set; }
+
     }
 
 }

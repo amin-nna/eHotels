@@ -21,9 +21,9 @@ namespace eHotels.Models
         public string PhoneNumber { get; set; }
 
         [Required]
-        public int Hotel_Hotel_ID { get; set; }
+        public string Hotel_Hotel_ID { get; set; }
 
-        
+        public virtual Hotels Hotel { get; set; }
     }
 
 }

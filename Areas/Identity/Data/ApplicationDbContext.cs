@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using eHotels.Models;
 using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using Twilio.TwiML.Voice;
+using System.Reflection.Emit;
 
 namespace eHotels.Areas.Identity.Data;
 
@@ -23,11 +24,52 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         // For example, you can rename the ASP.NET Identity table names and more.
         // Add your customizations after calling base.OnModelCreating(builder);
         builder.ApplyConfiguration(new ApplicationUserEntityConfiguration());
+
+        builder.Entity<CentralOffices>()
+    .HasOne(co => co.HotelChain)
+    .WithMany(hc => hc.CentralOffices)
+    .HasForeignKey(co => co.HotelChain_Name)
+    .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<Hotels>()
+        .HasOne(h => h.HotelChain)
+        .WithMany(hc => hc.Hotels)
+        .HasForeignKey(h => h.Hotel_chainName_ID)
+        .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<HotelPhoneNumbers>()
+        .HasOne(hp => hp.Hotel)
+        .WithMany(h => h.HotelPhoneNumbers)
+        .HasForeignKey(hp => hp.Hotel_Hotel_ID)
+        .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<Rooms>()
+       .HasOne(r => r.Hotel)
+       .WithMany(h => h.Rooms)
+       .HasForeignKey(r => r.Hotel_ID)
+       .OnDelete(DeleteBehavior.Cascade);
+
         builder.Entity<RoomAmenities>()
                 .HasKey(ra => new { ra.RoomNumber, ra.Amenity });
+
         builder.Entity<RoomIssues>()
                 .HasKey(ra => new { ra.RoomNumber, ra.Problem });
+
+        builder.Entity<RoomAmenities>()
+            .HasOne(ra => ra.Room)
+            .WithMany(r => r.RoomAmenities)
+            .HasForeignKey(ra => ra.RoomNumber)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<RoomIssues>()
+            .HasOne(ri => ri.Room)
+            .WithMany(r => r.RoomIssues)
+            .HasForeignKey(ri => ri.RoomNumber)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        
     }
+
 
     //We will define a data sets
     public DbSet<HotelChains> HotelChain { get; set; }

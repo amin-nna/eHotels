@@ -19,6 +19,8 @@ namespace eHotels.Models
         public string Problem { get; set; }
 
         public string Description { get; set; }
+
+        public virtual Rooms Room { get; set; }
     }
 
 }

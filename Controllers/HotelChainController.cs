@@ -59,7 +59,7 @@ namespace eHotels.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Street,City,Province,PostalCode,Hotels")] HotelChains hotelChains)
+        public async Task<IActionResult> Create([Bind("Name,Street,City,Province,PostalCode,HotelsCount")] HotelChains hotelChains)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace eHotels.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Name,Street,City,Province,PostalCode,Hotels,Rating")] HotelChains hotelChains)
+        public async Task<IActionResult> Edit(string id, [Bind("Name,Street,City,Province,PostalCode,HotelsCount,Rating")] HotelChains hotelChains)
         {
             if (id != hotelChains.Name)
             {
