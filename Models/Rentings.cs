@@ -16,10 +16,6 @@ namespace eHotels.Models
         [Required]
         public int RentingID { get; set; }
 
-        [Required]
-        [ForeignKey("Customer_SSN_SIN")]
-        public string Customer { get; set; }
-
         [ForeignKey("RoomNumber")]
         [Required]
         public int RoomNumber { get; set; }
@@ -27,6 +23,20 @@ namespace eHotels.Models
         [Required]
         [ForeignKey("Employee_Renting")]
         public string Employee { get; set; }
+
+        [Required]
+        [ForeignKey("Customer_SSN_SIN")]
+        public string Customer { get; set; }
+
+        [Required]
+        public DateTime Start { get; set; }
+
+        [Required]
+        public DateTime End { get; set; }
+
+        [Required]
+        public Boolean Active { get; set; }
+
     }
 }
 

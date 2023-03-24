@@ -63,9 +63,12 @@ namespace eHotels.Migrations
                 {
                     BookingID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Customer = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RoomNumber = table.Column<int>(type: "int", nullable: false),
-                    Employee = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Customer = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RoomNumber = table.Column<int>(type: "int", nullable: true),
+                    Employee = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Start = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    End = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -95,9 +98,12 @@ namespace eHotels.Migrations
                 {
                     RentingID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Customer = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RoomNumber = table.Column<int>(type: "int", nullable: false),
-                    Employee = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Employee = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Customer = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Start = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    End = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -281,18 +287,18 @@ namespace eHotels.Migrations
                 name: "Room",
                 columns: table => new
                 {
-                    RoomNumber = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoomID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoomNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Hotel_ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
-                    Currency = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Capacity = table.Column<int>(type: "int", nullable: false),
                     Extendable = table.Column<bool>(type: "bit", nullable: false),
                     View = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Room", x => x.RoomNumber);
+                    table.PrimaryKey("PK_Room", x => x.RoomID);
                     table.ForeignKey(
                         name: "FK_Room_Hotel_Hotel_ID",
                         column: x => x.Hotel_ID,
@@ -305,7 +311,7 @@ namespace eHotels.Migrations
                 name: "RoomAmenity",
                 columns: table => new
                 {
-                    RoomNumber = table.Column<int>(type: "int", nullable: false),
+                    RoomNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Amenity = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -316,7 +322,7 @@ namespace eHotels.Migrations
                         name: "FK_RoomAmenity_Room_RoomNumber",
                         column: x => x.RoomNumber,
                         principalTable: "Room",
-                        principalColumn: "RoomNumber",
+                        principalColumn: "RoomID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -324,7 +330,7 @@ namespace eHotels.Migrations
                 name: "RoomIssue",
                 columns: table => new
                 {
-                    RoomNumber = table.Column<int>(type: "int", nullable: false),
+                    RoomNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Problem = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -335,7 +341,7 @@ namespace eHotels.Migrations
                         name: "FK_RoomIssue_Room_RoomNumber",
                         column: x => x.RoomNumber,
                         principalTable: "Room",
-                        principalColumn: "RoomNumber",
+                        principalColumn: "RoomID",
                         onDelete: ReferentialAction.Cascade);
                 });
 

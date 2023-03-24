@@ -12,7 +12,7 @@ using eHotels.Areas.Identity.Data;
 namespace eHotels.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230321080659_migration001")]
+    [Migration("20230323222127_migration001")]
     partial class migration001
     {
         /// <inheritdoc />
@@ -270,16 +270,23 @@ namespace eHotels.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingID"));
 
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Customer")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Employee")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoomNumber")
+                    b.Property<DateTime>("End")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("RoomNumber")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("BookingID");
 
@@ -424,6 +431,9 @@ namespace eHotels.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RentingID"));
 
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Customer")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -432,8 +442,14 @@ namespace eHotels.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("End")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("RoomNumber")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("RentingID");
 
@@ -442,8 +458,8 @@ namespace eHotels.Migrations
 
             modelBuilder.Entity("eHotels.Models.RoomAmenities", b =>
                 {
-                    b.Property<int>("RoomNumber")
-                        .HasColumnType("int")
+                    b.Property<string>("RoomNumber")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnOrder(0);
 
                     b.Property<string>("Amenity")
@@ -461,8 +477,8 @@ namespace eHotels.Migrations
 
             modelBuilder.Entity("eHotels.Models.RoomIssues", b =>
                 {
-                    b.Property<int>("RoomNumber")
-                        .HasColumnType("int")
+                    b.Property<string>("RoomNumber")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnOrder(0);
 
                     b.Property<string>("Problem")
@@ -480,19 +496,15 @@ namespace eHotels.Migrations
 
             modelBuilder.Entity("eHotels.Models.Rooms", b =>
                 {
-                    b.Property<int>("RoomNumber")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomNumber"));
+                    b.Property<string>("RoomID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Capacity")
                         .HasColumnType("int");
 
                     b.Property<string>("Currency")
                         .IsRequired()
-                        .HasMaxLength(3)
-                        .HasColumnType("nvarchar(3)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Extendable")
                         .HasColumnType("bit");
@@ -504,10 +516,14 @@ namespace eHotels.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
+                    b.Property<string>("RoomNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("View")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("RoomNumber");
+                    b.HasKey("RoomID");
 
                     b.HasIndex("Hotel_ID");
 

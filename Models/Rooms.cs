@@ -7,17 +7,21 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 
 namespace eHotels.Models
 {
+
 
     public class Rooms
     {
         [Key]
         [Required]
-        public int RoomNumber { get; set; }
+        public string RoomID { get; set; }
 
-        [ForeignKey("Hotel_ID")]
+        [Required]
+        public string RoomNumber { get; set; }
+
         [Required]
         public string Hotel_ID { get; set; }
 
@@ -25,7 +29,6 @@ namespace eHotels.Models
         public int Price { get; set; }
 
         [Required]
-        [StringLength(3)]
         public string Currency { get; set; }
 
         [Required]

@@ -35,31 +35,22 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Hotel_ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Currency)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Capacity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Extendable)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.View)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.RoomNumber">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.RoomNumber">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.RoomNumber">Delete</a>
-            </td>
-        </tr>
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.RoomNumber)</h5>
+                    <p class="card-text">@Html.DisplayNameFor(modelItem => item.Capacity) : @Html.DisplayFor(modelItem => item.Capacity)</p>
+                    <p class="card-text">@Html.DisplayNameFor(modelItem => item.Extendable) : @Html.DisplayFor(modelItem => item.Extendable)</p>
+                    <p class="card-text">@Html.DisplayNameFor(modelItem => item.View) @Html.DisplayFor(modelItem => item.View)</p>
+                    <p class="card-text">@Html.DisplayNameFor(modelItem => item.Price) : @Html.DisplayFor(modelItem => item.Price) @Html.DisplayNameFor(modelItem => item.Currency)</p>
+                    <div class="d-flex justify-content-end">
+                        <a class="btn btn-secondary me-2" asp-action="Details" asp-route-id="@item.RoomID">Details</a>
+                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.RoomID">Edit</a>
+                        <a class="btn btn-primary" asp-action="Delete" asp-route-id="@item.RoomID">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 }
     </tbody>
 </table>

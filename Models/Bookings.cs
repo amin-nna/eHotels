@@ -26,6 +26,15 @@ namespace eHotels.Models
 
         [ForeignKey("Employee_Booking")]
         public string? Employee { get; set; }
+
+        [Required]
+        public DateTime Start { get; set; }
+
+        [Required]
+        public DateTime End { get; set; }
+
+        [Required]
+        public Boolean Active { get; set; }
     }
 
 }

@@ -6,12 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using eHotels.Areas.Identity.Data;
-using Microsoft.AspNetCore.Authorization;
 using eHotels.Models;
 
 namespace eHotels.Controllers
 {
-    [Authorize(Roles = "Client, Employee")]
     public class RentingController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -58,7 +56,7 @@ namespace eHotels.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RentingID,Customer,RoomNumber,Employee")] Rentings rentings)
+        public async Task<IActionResult> Create([Bind("RentingID,RoomNumber,Employee,Customer,Start,End,Active")] Rentings rentings)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +88,7 @@ namespace eHotels.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RentingID,Customer,RoomNumber,Employee")] Rentings rentings)
+        public async Task<IActionResult> Edit(int id, [Bind("RentingID,RoomNumber,Employee,Customer,Start,End,Active")] Rentings rentings)
         {
             if (id != rentings.RentingID)
             {

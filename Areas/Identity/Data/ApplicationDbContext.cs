@@ -11,6 +11,8 @@ namespace eHotels.Areas.Identity.Data;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
+    
+
     //This class will be responsile of declaring the Tables and inject the connection string 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {

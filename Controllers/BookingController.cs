@@ -5,13 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
 using eHotels.Areas.Identity.Data;
 using eHotels.Models;
 
 namespace eHotels.Controllers
 {
-    [Authorize(Roles = "Client, Employee")]
     public class BookingController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -58,7 +56,7 @@ namespace eHotels.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BookingID,Customer,RoomNumber,Employee")] Bookings bookings)
+        public async Task<IActionResult> Create([Bind("BookingID,Customer,RoomNumber,Employee,Start,End,Active")] Bookings bookings)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +88,7 @@ namespace eHotels.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BookingID,Customer,RoomNumber,Employee")] Bookings bookings)
+        public async Task<IActionResult> Edit(int id, [Bind("BookingID,Customer,RoomNumber,Employee,Start,End,Active")] Bookings bookings)
         {
             if (id != bookings.BookingID)
             {

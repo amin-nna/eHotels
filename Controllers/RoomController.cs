@@ -4,14 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using eHotels.Areas.Identity.Data;
 using eHotels.Models;
 
 namespace eHotels.Controllers
 {
-    [Authorize(Roles = "Employee")]
     public class RoomController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -24,13 +22,19 @@ namespace eHotels.Controllers
         // GET: Room
         public async Task<IActionResult> Index()
         {
-              return _context.Room != null ? 
-                          View(await _context.Room.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Room'  is null.");
+            var applicationDbContext = _context.Room.Include(r => r.Hotel);
+            return View(await applicationDbContext.ToListAsync());
         }
+        public async Task<IActionResult> IndexHotel(string hotel_ID)
+        {
+            var rooms = await _context.Room
+                .Where(co => co.Hotel_ID == hotel_ID)
+                .ToListAsync();
 
-        // GET: Room/Details/5
-        public async Task<IActionResult> Details(int? id)
+            return PartialView(rooms);
+        }
+            // GET: Room/Details/5
+            public async Task<IActionResult> Details(string id)
         {
             if (id == null || _context.Room == null)
             {
@@ -38,7 +42,8 @@ namespace eHotels.Controllers
             }
 
             var rooms = await _context.Room
-                .FirstOrDefaultAsync(m => m.RoomNumber == id);
+                .Include(r => r.Hotel)
+                .FirstOrDefaultAsync(m => m.RoomID == id);
             if (rooms == null)
             {
                 return NotFound();
@@ -50,7 +55,7 @@ namespace eHotels.Controllers
         // GET: Room/Create
         public IActionResult Create()
         {
-            ViewBag.HotelList = _context.Hotel.Select(h => h.Hotel_ID).ToList();
+            ViewData["Hotel_ID"] = new SelectList(_context.Hotel, "Hotel_ID", "Hotel_ID");
             return View();
         }
 
@@ -59,7 +64,7 @@ namespace eHotels.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RoomNumber,Hotel_ID,Price,Currency,Capacity,Extendable,View")] Rooms rooms)
+        public async Task<IActionResult> Create([Bind("RoomID,RoomNumber,Hotel_ID,Price,Currency,Capacity,Extendable,View")] Rooms rooms)
         {
             if (ModelState.IsValid)
             {
@@ -67,11 +72,12 @@ namespace eHotels.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Hotel_ID"] = new SelectList(_context.Hotel, "Hotel_ID", "Hotel_ID", rooms.Hotel_ID);
             return View(rooms);
         }
 
         // GET: Room/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null || _context.Room == null)
             {
@@ -83,6 +89,7 @@ namespace eHotels.Controllers
             {
                 return NotFound();
             }
+            ViewData["Hotel_ID"] = new SelectList(_context.Hotel, "Hotel_ID", "Hotel_ID", rooms.Hotel_ID);
             return View(rooms);
         }
 
@@ -91,9 +98,9 @@ namespace eHotels.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RoomNumber,Hotel_ID,Price,Currency,Capacity,Extendable,View")] Rooms rooms)
+        public async Task<IActionResult> Edit(string id, [Bind("RoomID,RoomNumber,Hotel_ID,Price,Currency,Capacity,Extendable,View")] Rooms rooms)
         {
-            if (id != rooms.RoomNumber)
+            if (id != rooms.RoomID)
             {
                 return NotFound();
             }
@@ -107,7 +114,7 @@ namespace eHotels.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RoomsExists(rooms.RoomNumber))
+                    if (!RoomsExists(rooms.RoomID))
                     {
                         return NotFound();
                     }
@@ -118,11 +125,12 @@ namespace eHotels.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Hotel_ID"] = new SelectList(_context.Hotel, "Hotel_ID", "Hotel_ID", rooms.Hotel_ID);
             return View(rooms);
         }
 
         // GET: Room/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null || _context.Room == null)
             {
@@ -130,7 +138,8 @@ namespace eHotels.Controllers
             }
 
             var rooms = await _context.Room
-                .FirstOrDefaultAsync(m => m.RoomNumber == id);
+                .Include(r => r.Hotel)
+                .FirstOrDefaultAsync(m => m.RoomID == id);
             if (rooms == null)
             {
                 return NotFound();
@@ -142,7 +151,7 @@ namespace eHotels.Controllers
         // POST: Room/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             if (_context.Room == null)
             {
@@ -158,9 +167,9 @@ namespace eHotels.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RoomsExists(int id)
+        private bool RoomsExists(string id)
         {
-          return (_context.Room?.Any(e => e.RoomNumber == id)).GetValueOrDefault();
+          return (_context.Room?.Any(e => e.RoomID == id)).GetValueOrDefault();
         }
     }
 }

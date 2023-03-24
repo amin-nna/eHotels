@@ -7,25 +7,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 using System.Diagnostics.CodeAnalysis;
-
 namespace eHotels.Models
 {
-    public class RoomAmenities
-    {
-        [Key]
-        [Column(Order = 0)]
-        public string RoomNumber { get; set; }
-
-        [Key]
-        [Column(Order = 1)]
-        public string Amenity { get; set; }
-
-        public string Description { get; set; }
-
-        [BindNever]
-        public virtual Rooms Room { get; set; }
-
-    }
+  public class AvailableRoomsPerCity{
+    string City { get; }
+    int AvailableRoom { get; }
+  }
 
 }
-

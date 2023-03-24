@@ -12,7 +12,7 @@ namespace eHotels.Models
     {
         [Key]
         [Column(Order = 0)]
-        public int RoomNumber { get; set; }
+        public string RoomNumber { get; set; }
 
         [Key]
         [Column(Order = 1)]
