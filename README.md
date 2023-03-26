@@ -16,13 +16,11 @@
   <h2>Features</h2>
   
   <ul>
-    
     <li>Admninistrator interface for Hotel Chains management</li>
     <li>Employee interface for bookings and rentings management</li>
     <li>User interface for bookings</li>
     <li>Google Apis used to locate and display data on map</li>
-    <li>Email sender</li>
-    
+    <li>Email sender</li> 
   </ul>
 
   <h2>Technologies Used</h2>
