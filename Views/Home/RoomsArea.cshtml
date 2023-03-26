@@ -1,17 +1,47 @@
 ﻿@model IEnumerable<eHotels.Models.number_of_available_rooms_per_area>;
+<div class="container">
+    <div id="map" style="height: 400px; width: 100%;"></div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYOJKaEalQ4BtoH8T00jJINuUQnysNgZ8&callback=initMap" async defer></script>
+    <script>
+        function initMap() {
+            // Create a new map centered on Canada
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 56.1304, lng: -106.3468 },
+                zoom: 4
+            });
 
+            function geocodeAddress(address, callback) {
+                var geocoder = new google.maps.Geocoder();
+                geocoder.geocode({ 'address': address }, function (results, status) {
+                    if (status === 'OK') {
+                        var location = results[0].geometry.location;
+                        callback(location);
+                    } else {
+                        console.log('Geocode was not successful for the following reason: ' + status);
+                        callback(null);
+                    }
+                });
+            }
 
-
-<div class="row">
-    @foreach (var item in Model)
-    {
-        <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">@item.Area</h5>
-                    <p class="card-text">@item.Count</p>
-                </div>
-            </div>
-        </div>
-    }
+            // Loop through your data items and create a marker for each one
+            @foreach (var item in Model)
+            {
+                <text>
+                    geocodeAddress('@item.Area', function (location) {
+                        if (location) {
+                            var marker = new google.maps.Marker({
+                                position: location,
+                                map: map,
+                                title: '@item.Area',
+                                label: '@item.Count'
+                            });
+                        }
+                    });
+                </text>
+            }
+        }
+        // Call the initMap function after the Google Maps API script tag
+        initMap();
+    </script>
 </div>
