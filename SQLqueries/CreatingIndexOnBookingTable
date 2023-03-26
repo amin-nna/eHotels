@@ -1,0 +1,1 @@
+CREATE INDEX idx_Booking_StartEnd ON Booking ([start], [end]);

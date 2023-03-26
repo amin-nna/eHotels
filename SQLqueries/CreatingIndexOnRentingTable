@@ -1,0 +1,1 @@
+CREATE INDEX idx_Renting_StartEnd ON Renting ([start], [end]);
