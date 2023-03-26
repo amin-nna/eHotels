@@ -34,6 +34,7 @@
   <ol>
     <li>Clone this repository to your local machine.</li>
     <li>Open the solution file in Visual Studio.</li>
+    <li>Open appsettings.Development.json and add conigurations</li>
     <li>Build the solution.</li>
     <li>Run the application.</li>
   </ol>
