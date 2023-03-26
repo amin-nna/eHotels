@@ -40,7 +40,7 @@ namespace eHotels.Controllers
             // apply search term filter if provided
             if (!string.IsNullOrEmpty(searchTerm))
             {
-                query = query.Where(p => p.Hotel.Name.Contains(searchTerm));
+                query = query.Where(p => p.Hotel.Name.Contains(searchTerm) || p.RoomAmenities.Any(a => a.Description.Contains(searchTerm)));
             }
 
             // apply price range filter if provided

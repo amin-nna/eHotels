@@ -1,5 +1,10 @@
 ﻿@model IEnumerable<eHotels.Models.hotel_capacity>;
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.2.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-DzozMP+yzw5J5bn5W/mzk9XnZxBG+ZvLJmaELWxEGuA1tYff7wvE/jtcrW7l9bZikq3ZVvCTgks88wbBxRy1Rw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.2.3/js/bootstrap.min.js"></script>
 
 
 <div class="row">
@@ -8,8 +13,10 @@
         <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">@item.Hotel</h5>
-                    <p class="card-text">@item.Capacity</p>
+                    <h5 class="card-title "></h5>
+                    <div class="container text-center" style="font-weight: 300;"><i class="fa fa-hotel" style="font-size: 150%; transform: scaleX(0.7);"></i></div>
+                    <p class="card-text">@item.Hotel</p>
+                    <p class="card-text">@item.Capacity rooms</p>
                 </div>
             </div>
         </div>

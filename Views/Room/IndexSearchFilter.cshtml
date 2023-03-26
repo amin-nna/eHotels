@@ -6,17 +6,14 @@
 }
 else
 {
-    <div class="container-fluid pb-5">
+    <div class="container pb-5">
         <h1 class="mb-4">Find Your Perfect Room</h1>
-        <div class="container">
+        <div class="container-fluid" style=" background-color: #f8f8f8; padding: 20px; border-radius: 5px; margin-bottom: 30px;">
             <div class="row">
-                <div class="col-md-3">
-                    <div class="sidebar">
+                <div class="col-md-2">
+                    <div class="filter-section" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-bottom: 30px; width: fit-content;" >
+                        <!-- filter form goes here -->
                         <form method="get" action="@Url.Action("IndexSearchFilter", "Room")">
-                            <div class="form-group">
-                                <label for="searchTerm">Search:</label>
-                                <input type="text" name="searchTerm" class="form-control" id="searchTerm" placeholder="Enter search term">
-                            </div>
                             <div class="form-group">
                                 <label for="city">City:</label>
                                 <select name="city" class="form-control" id="city">
@@ -43,7 +40,7 @@ else
                                 <label for="hotel">Hotel:</label>
                                 <select id="hotel" name="hotel" class="form-control" asp-items="ViewBag.HotelName"><option value=""></option></select>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="capacity">Capacity:</label>
                                 <select name="capacity" class="form-control" id="capacity" value="">
@@ -67,27 +64,48 @@ else
                         </form>
                     </div>
                 </div>
-                <div class="col-md-9">
-                    <div class="row">
-                        @foreach (var item in Model)
-                        {
-                            <div class="col-md-4">
-                                <div class="product-card">
-                                    <div class="product-image">
-                                        <img src="https://via.placeholder.com/300x200" alt="Product image">
-                                    </div>
-                                    <div class="product-info">
-                                        <h3 class="product-title">@Html.DisplayFor(modelItem => item.Hotel.Name)</h3>
-                                        <h5 class="card-title">Room number : @Html.DisplayFor(modelItem => item.RoomNumber)</h5>
-                                        <p class="card-text">@Html.DisplayNameFor(modelItem => item.Capacity) : @Html.DisplayFor(modelItem => item.Capacity)</p>
-                                        <p class="card-text">@Html.DisplayNameFor(modelItem => item.Extendable) : @Html.DisplayFor(modelItem => item.Extendable)</p>
-                                        <p class="card-text">@Html.DisplayNameFor(modelItem => item.View) : @Html.DisplayFor(modelItem => item.View)</p>
-                                        <p class="card-text">@Html.DisplayNameFor(modelItem => item.Price) : @Html.DisplayFor(modelItem => item.Price) @Html.DisplayFor(modelItem => item.Currency)</p>
-                                        <button class="btn btn-primary">Book</button>
+                <div class="col-md-10" >
+                    <div class="search-bar" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; margin-bottom: 30px;">
+                        <!-- search bar form goes here -->
+                        <form class="search-bar-form" method="get" action="@Url.Action("IndexSearchFilter", "Room")" style="">
+                            <div class="form-group">
+                                <label for="searchTerm">Search:</label>
+                                <input type="text" name="searchTerm" class="form-control" id="searchTerm" placeholder="Enter search term">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </form>
+                    </div>
+                    <div class="cont p1 m2" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; margin-bottom: 30px;">
+                        <div class="results d-flex pb-2" style="display: flex; flex-wrap: wrap; overflow-y: auto; justify-content: space-between; width: fit-content;">
+                            <!-- results go here -->
+                            @foreach (var item in Model)
+                            {
+                                var imageId = "room-image-" + Model.ToList().IndexOf(item);
+                                <div class="p-1 m-1">
+                                    <div class="product-card card border border-dark rounded mb-4 d-inline-block">
+                                        <div class="product-image">
+                                            <img id="@imageId" src="https://via.placeholder.com/300x200" alt="Room image" style="width: 300px; height: 220px; object-fit: cover;">
+                                            <!-- JavaScript code to update the img src attribute -->
+                                            <script>
+                                            var randomNumber = Math.floor(Math.random() * 36)+1; // Generate a random number between 1 and 36
+                                            var imagePath = "/roomImages/File" + randomNumber; // Construct the image path with the random number
+                                            var imgElement = document.getElementById("@imageId"); // Get a reference to the img element using its ID
+                                            imgElement.src = imagePath + ".jpg"; // Set the src attribute of the img element with the image path
+                                            </script>
+                                        </div>
+                                        <div class="product-info mb-1 p-1">
+                                            <h6 class="product-title">@Html.DisplayFor(modelItem => item.Hotel.Name)</h6>
+                                            <h7 class="card-title">Room number : @Html.DisplayFor(modelItem => item.RoomNumber)</h7>
+                                            <p class="card-text">@Html.DisplayNameFor(modelItem => item.Capacity) : @Html.DisplayFor(modelItem => item.Capacity)</p>
+                                            <p class="card-text">@Html.DisplayNameFor(modelItem => item.Extendable) : @Html.DisplayFor(modelItem => item.Extendable)</p>
+                                            <p class="card-text">@Html.DisplayNameFor(modelItem => item.View) : @Html.DisplayFor(modelItem => item.View)</p>
+                                            <p class="card-text">@Html.DisplayNameFor(modelItem => item.Price) : @Html.DisplayFor(modelItem => item.Price) @Html.DisplayFor(modelItem => item.Currency)</p>
+                                            <button class="btn btn-primary">Book</button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        }
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
@@ -95,3 +113,6 @@ else
     </div>
 
 }
+
+
+

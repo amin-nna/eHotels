@@ -1,4 +1,8 @@
 @model IEnumerable<eHotels.Models.HotelChains>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.2.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.2.3/js/bootstrap.min.js"></script>
 
 @if (!Model.Any())
 {
@@ -11,7 +15,8 @@ else
             @foreach (var item in Model)
             {
                 <div class="d-inline-block" style="width: 300px;">
-                    <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="...">
+                    <div class="container text-center"><i class="bi bi-building" style="font-size: 150%;"></i></div>
+
                     <div class="card-body" style="height: 200px;">
                         <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
                         <p class="card-text">@Html.DisplayFor(modelItem => item.Street)</p>
