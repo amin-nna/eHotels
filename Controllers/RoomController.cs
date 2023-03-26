@@ -25,6 +25,101 @@ namespace eHotels.Controllers
             var applicationDbContext = _context.Room.Include(r => r.Hotel);
             return View(await applicationDbContext.ToListAsync());
         }
+        /*
+        public async Task<IActionResult> IndexSearchFilter()
+        {
+            var applicationDbContext = _context.Room.Include(h => h.Hotel);
+            return View(await applicationDbContext.ToListAsync());
+        }
+        */
+        public async Task<IActionResult> IndexSearchFilter(string? searchTerm, int? minPrice, int? maxPrice, string? city, DateTime? startDate, DateTime? endDate, string? hotel, int? capacity, int? category)
+        {
+            ViewData["HotelName"] = new SelectList(_context.Hotel, "Name", "Name");
+            var query = _context.Room.Include(p => p.Hotel).AsQueryable();
+
+            // apply search term filter if provided
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(p => p.Hotel.Name.Contains(searchTerm));
+            }
+
+            // apply price range filter if provided
+            if (minPrice > 0)
+            {
+                query = query.Where(p => p.Price >= minPrice);
+            }
+            if (maxPrice > 0)
+            {
+                query = query.Where(p => p.Price <= maxPrice);
+            }
+
+            // apply category filter if provided
+            if (!string.IsNullOrEmpty(city))
+            {
+                query = query.Where(p => p.Hotel.City == city);
+            }
+
+            // apply start and end date filter if provided
+            //Here roomNumber stands for RoomID
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                var bookedRooms = await _context.Booking
+                    .Where(b => (b.Start <= startDate && b.End >= startDate)
+                        || (b.Start <= endDate && b.End >= endDate)
+                        || (b.Start >= startDate && b.End <= endDate))
+                    .Select(b => b.RoomNumber)
+                    .ToListAsync();
+
+                var rentedRooms = await _context.Renting
+                    .Where(r => (r.Start <= startDate && r.End >= startDate)
+                        || (r.Start <= endDate && r.End >= endDate)
+                        || (r.Start >= startDate && r.End <= endDate))
+                    .Select(r => r.RoomNumber)
+                    .ToListAsync();
+
+                query = query.Where(r => !bookedRooms.Contains(r.RoomNumber) && !rentedRooms.Contains(r.RoomNumber));
+            }
+
+            // apply hotel filter if provided
+            if (!string.IsNullOrEmpty(hotel))
+            {
+                query = query.Where(p => p.Hotel.Name == hotel);
+            }
+
+            // apply capacity filter if provided
+            if (capacity.HasValue)
+            {
+                query = query.Where(p => p.Capacity == capacity.Value);
+            }
+
+            // apply category filter if provided
+            if (category.HasValue)
+            {
+                switch (category.Value)
+                {
+                    case 1:
+                        query = query.Where(p => p.Hotel.HotelChain.Rating == 1);
+                        break;
+                    case 2:
+                        query = query.Where(p => p.Hotel.HotelChain.Rating == 2);
+                        break;
+                    case 3:
+                        query = query.Where(p => p.Hotel.HotelChain.Rating == 3);
+                        break;
+                    case 4:
+                        query = query.Where(p => p.Hotel.HotelChain.Rating == 4);
+                        break;
+                    case 5:
+                        query = query.Where(p => p.Hotel.HotelChain.Rating == 5);
+                        break;
+                }
+            }
+
+            var products = await query.ToListAsync();
+
+            return View(products);
+        }
+
         public async Task<IActionResult> IndexHotel(string hotel_ID)
         {
             var rooms = await _context.Room
@@ -66,11 +161,19 @@ namespace eHotels.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("RoomID,RoomNumber,Hotel_ID,Price,Currency,Capacity,Extendable,View")] Rooms rooms)
         {
+            ModelState.Remove("Hotel");
+            ModelState.Remove("RoomIssues");
+            ModelState.Remove("RoomID");
+            ModelState.Remove("RoomAmenities");
             if (ModelState.IsValid)
             {
+                var hotelR = await _context.Hotel.FindAsync(rooms.Hotel_ID);
+                rooms.Hotel = hotelR;
+                rooms.Hotel_ID=rooms.Hotel.Hotel_ID +" "+rooms.Hotel.Street;
+                rooms.RoomID = rooms.Hotel_ID + " " + rooms.RoomNumber;
                 _context.Add(rooms);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Create", "Room");
             }
             ViewData["Hotel_ID"] = new SelectList(_context.Hotel, "Hotel_ID", "Hotel_ID", rooms.Hotel_ID);
             return View(rooms);
@@ -84,7 +187,7 @@ namespace eHotels.Controllers
                 return NotFound();
             }
 
-            var rooms = await _context.Room.FindAsync(id);
+            var rooms = await _context.Room.Include(r => r.Hotel).FirstOrDefaultAsync(r => r.RoomID == id);
             if (rooms == null)
             {
                 return NotFound();
@@ -123,7 +226,7 @@ namespace eHotels.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "HotelChain");
             }
             ViewData["Hotel_ID"] = new SelectList(_context.Hotel, "Hotel_ID", "Hotel_ID", rooms.Hotel_ID);
             return View(rooms);
@@ -164,7 +267,7 @@ namespace eHotels.Controllers
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "HotelChain");
         }
 
         private bool RoomsExists(string id)

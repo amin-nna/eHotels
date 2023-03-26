@@ -23,9 +23,7 @@ else
                         <div class="d-flex justify-content-end">
                             <a class="btn btn-secondary me-2" asp-action="Details" asp-route-id="@item.RoomID">Details</a>
                             <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.RoomID">Edit</a>
-                            <form asp-action="Delete" asp-route-id="@item.RoomID" method="post" class="d-inline">
-                                <button type="submit" class="btn btn-danger ms-2">Delete</button>
-                            </form>
+                            <a class="btn btn-primary" asp-action="Delete" asp-route-id="@item.RoomID">Delete</a>
                         </div>
                     </div>
                 </div>

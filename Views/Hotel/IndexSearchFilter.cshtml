@@ -1,0 +1,49 @@
+@model IEnumerable<eHotels.Models.Hotels>
+
+@if (!Model.Any())
+{
+    <p>No hotels found.</p>
+}
+else
+{
+<div class="container-fluid pb-5">
+    <h1 class="mb-4">Find Your Perfect Hotel</h1>
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Search for hotels..." aria-label="Search for hotels..." aria-describedby="button-addon2">
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="button" id="button-addon2">Search</button>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="sidebar">
+                    <!-- Sidebar content here -->
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <div class="product-image">
+                                    <img src="https://via.placeholder.com/300x200" alt="Product image">
+                                </div>
+                                <div class="product-info">
+                                    <h3 class="product-title">@Html.DisplayFor(modelItem => item.Name)</h3>
+                                    <p class="product-price">@Html.DisplayFor(modelItem => item.RoomsCount)</p>
+                                    <button class="btn btn-primary">View rooms</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+}
+
+

@@ -1,0 +1,97 @@
+@model IEnumerable<eHotels.Models.Rooms>
+
+@if (!Model.Any())
+{
+    <p>No rooms found.</p>
+}
+else
+{
+    <div class="container-fluid pb-5">
+        <h1 class="mb-4">Find Your Perfect Room</h1>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="sidebar">
+                        <form method="get" action="@Url.Action("IndexSearchFilter", "Room")">
+                            <div class="form-group">
+                                <label for="searchTerm">Search:</label>
+                                <input type="text" name="searchTerm" class="form-control" id="searchTerm" placeholder="Enter search term">
+                            </div>
+                            <div class="form-group">
+                                <label for="city">City:</label>
+                                <select name="city" class="form-control" id="city">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="minPrice">Minimum price:</label>
+                                <input type="number" name="minPrice" class="form-control" id="minPrice" placeholder="Enter minimum price" value="" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="maxPrice">Maximum price:</label>
+                                <input type="number" name="maxPrice" class="form-control" id="maxPrice" placeholder="Enter maximum price" value="">
+                            </div>
+                            <div class="form-group">
+                                <label for="startDate">Start date:</label>
+                                <input type="date" name="startDate" class="form-control" id="startDate" placeholder="Enter start date" value="">
+                            </div>
+                            <div class="form-group">
+                                <label for="endDate">End date:</label>
+                                <input type="date" name="endDate" class="form-control" id="endDate" placeholder="Enter end date" value="">
+                            </div>
+                            <div class="form-group">
+                                <label for="hotel">Hotel:</label>
+                                <select id="hotel" name="hotel" class="form-control" asp-items="ViewBag.HotelName"><option value=""></option></select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="capacity">Capacity:</label>
+                                <select name="capacity" class="form-control" id="capacity" value="">
+                                    <option value=""></option>
+                                    <option value="1">Single</option>
+                                    <option value="2">Double</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="category">Category:</label>
+                                <select name="category" class="form-control" id="category">
+                                    <option value=""></option>
+                                    <option value="1">&#9733;&#9734;&#9734;&#9734;&#9734;</option>
+                                    <option value="2">&#9733;&#9733;&#9734;&#9734;&#9734;</option>
+                                    <option value="3">&#9733;&#9733;&#9733;&#9734;&#9734;</option>
+                                    <option value="4">&#9733;&#9733;&#9733;&#9733;&#9734;</option>
+                                    <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733;</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Apply Filters</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="row">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-md-4">
+                                <div class="product-card">
+                                    <div class="product-image">
+                                        <img src="https://via.placeholder.com/300x200" alt="Product image">
+                                    </div>
+                                    <div class="product-info">
+                                        <h3 class="product-title">@Html.DisplayFor(modelItem => item.Hotel.Name)</h3>
+                                        <h5 class="card-title">Room number : @Html.DisplayFor(modelItem => item.RoomNumber)</h5>
+                                        <p class="card-text">@Html.DisplayNameFor(modelItem => item.Capacity) : @Html.DisplayFor(modelItem => item.Capacity)</p>
+                                        <p class="card-text">@Html.DisplayNameFor(modelItem => item.Extendable) : @Html.DisplayFor(modelItem => item.Extendable)</p>
+                                        <p class="card-text">@Html.DisplayNameFor(modelItem => item.View) : @Html.DisplayFor(modelItem => item.View)</p>
+                                        <p class="card-text">@Html.DisplayNameFor(modelItem => item.Price) : @Html.DisplayFor(modelItem => item.Price) @Html.DisplayFor(modelItem => item.Currency)</p>
+                                        <button class="btn btn-primary">Book</button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

@@ -49,6 +49,6 @@ namespace eHotels.Models
         public virtual ICollection<RoomAmenities> RoomAmenities { get; set; }
 
     }
-
+     
 }
 

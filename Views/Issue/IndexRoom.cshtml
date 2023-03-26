@@ -1,0 +1,39 @@
+@model IEnumerable<eHotels.Models.RoomIssues>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@if (!Model.Any())
+{
+    <p>No issue found.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { RoomNumber = item.RoomNumber, Problem = item.Problem }) |
+                        @Html.ActionLink("Details", "Details", new { RoomNumber = item.RoomNumber, Problem = item.Problem }) |
+                        @Html.ActionLink("Delete", "Delete", new { RoomNumber = item.RoomNumber, Problem = item.Problem })
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}

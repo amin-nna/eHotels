@@ -18,15 +18,15 @@ namespace eHotels.Models
 
         [ForeignKey("RoomNumber")]
         [Required]
-        public int RoomNumber { get; set; }
+        public string? RoomNumber { get; set; }
 
         [Required]
         [ForeignKey("Employee_Renting")]
-        public string Employee { get; set; }
+        public string? Employee { get; set; }
 
         [Required]
         [ForeignKey("Customer_SSN_SIN")]
-        public string Customer { get; set; }
+        public string? Customer { get; set; }
 
         [Required]
         public DateTime Start { get; set; }

@@ -6,46 +6,41 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using eHotels.Areas.Identity.Data;
-using Microsoft.AspNetCore.Authorization;
 using eHotels.Models;
-using System.Net;
-using Newtonsoft.Json;
 
 namespace eHotels.Controllers
 {
-    [Authorize(Roles = "Administrator, Employee")]
     public class HotelController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly IConfiguration _configuration;
 
-        public HotelController(ApplicationDbContext context, IConfiguration configuration)
+        public HotelController(ApplicationDbContext context)
         {
             _context = context;
-            _configuration = configuration;
         }
 
         // GET: Hotel
         public async Task<IActionResult> Index()
         {
-              return _context.Hotel != null ? 
-                          View(await _context.Hotel.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Hotel'  is null.");
+            var applicationDbContext = _context.Hotel.Include(h => h.HotelChain);
+            return PartialView(await applicationDbContext.ToListAsync());
         }
-
+        public async Task<IActionResult> IndexSearchFilter()
+        {
+            var applicationDbContext = _context.Hotel.Include(h => h.HotelChain);
+            return View(await applicationDbContext.ToListAsync());
+        }
         public async Task<IActionResult> IndexChain(string name)
         {
-            var hotels = await _context.Hotel
+            var hotels = await _context.Hotel.Include(h => h.HotelChain)
                 .Where(co => co.Hotel_chainName_ID == name)
                 .ToListAsync();
-
 
             return PartialView(hotels);
         }
 
-
         // GET: Hotel/Details/5
-        public async Task<IActionResult> Details(string? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null || _context.Hotel == null)
             {
@@ -53,6 +48,7 @@ namespace eHotels.Controllers
             }
 
             var hotels = await _context.Hotel
+                .Include(h => h.HotelChain)
                 .FirstOrDefaultAsync(m => m.Hotel_ID == id);
             if (hotels == null)
             {
@@ -65,8 +61,7 @@ namespace eHotels.Controllers
         // GET: Hotel/Create
         public IActionResult Create()
         {
-            ViewBag.HotelChainList = _context.HotelChain.Select(h => h.Name).ToList();
-
+            ViewData["Hotel_chainName_ID"] = new SelectList(_context.HotelChain, "Name", "Name");
             return View();
         }
 
@@ -75,26 +70,27 @@ namespace eHotels.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Hotel_ID,Hotel_chainName_ID,Name,Street,City,Province,PostalCode,Email,RoomsCount")] Hotels hotels)
+        public async Task<IActionResult> Create([Bind("Hotel_ID,Name,Hotel_chainName_ID,Street,City,Province,PostalCode,Email,RoomsCount")] Hotels hotels)
         {
-            ViewBag.HotelChainList = _context.HotelChain.Select(h => h.Name).ToList();
-
-            ModelState.Remove("HotelChain");
             ModelState.Remove("Rooms");
+            ModelState.Remove("HotelChain");
             ModelState.Remove("HotelPhoneNumbers");
             ModelState.Remove("Hotel_ID");
             if (ModelState.IsValid)
             {
-                hotels.Hotel_ID = hotels.Hotel_chainName_ID + " " + hotels.Name + " " + hotels.Street;
+                var hotelC = await _context.HotelChain.FindAsync(hotels.Hotel_chainName_ID);
+                hotels.HotelChain = hotelC;
+                hotels.Hotel_ID = hotels.Hotel_chainName_ID + " " + hotels.Street;
                 _context.Add(hotels);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Create", "Hotel");
             }
+            ViewData["Hotel_chainName_ID"] = new SelectList(_context.HotelChain, "Name", "Name", hotels.Hotel_chainName_ID);
             return View(hotels);
         }
 
         // GET: Hotel/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null || _context.Hotel == null)
             {
@@ -106,6 +102,7 @@ namespace eHotels.Controllers
             {
                 return NotFound();
             }
+            ViewData["Hotel_chainName_ID"] = new SelectList(_context.HotelChain, "Name", "Name", hotels.Hotel_chainName_ID);
             return View(hotels);
         }
 
@@ -114,13 +111,15 @@ namespace eHotels.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Hotel_ID,Hotel_chainName_ID,Street,City,Province,PostalCode,Email,RoomsCount")] Hotels hotels)
+        public async Task<IActionResult> Edit(string id, [Bind("Hotel_ID,Name,Hotel_chainName_ID,Street,City,Province,PostalCode,Email,RoomsCount")] Hotels hotels)
         {
             if (id != hotels.Hotel_ID)
             {
                 return NotFound();
             }
-
+            ModelState.Remove("Rooms");
+            ModelState.Remove("HotelChain");
+            ModelState.Remove("HotelPhoneNumbers");
             if (ModelState.IsValid)
             {
                 try
@@ -139,13 +138,14 @@ namespace eHotels.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "HotelChain");
             }
+            ViewData["Hotel_chainName_ID"] = new SelectList(_context.HotelChain, "Name", "Name", hotels.Hotel_chainName_ID);
             return View(hotels);
         }
 
         // GET: Hotel/Delete/5
-        public async Task<IActionResult> Delete(string? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null || _context.Hotel == null)
             {
@@ -153,6 +153,7 @@ namespace eHotels.Controllers
             }
 
             var hotels = await _context.Hotel
+                .Include(h => h.HotelChain)
                 .FirstOrDefaultAsync(m => m.Hotel_ID == id);
             if (hotels == null)
             {
@@ -165,7 +166,7 @@ namespace eHotels.Controllers
         // POST: Hotel/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             if (_context.Hotel == null)
             {
@@ -185,78 +186,5 @@ namespace eHotels.Controllers
         {
           return (_context.Hotel?.Any(e => e.Hotel_ID == id)).GetValueOrDefault();
         }
-
-        public IActionResult FilterHotels(string address, int perimeter, string unit)
-        {
-            var hotels = _context.Hotel.ToList();
-            var filteredHotels = new List<Hotels>();
-
-            foreach (var hotel in hotels)
-            {
-                var fullAddress = hotel.Street + ", " + hotel.City + ", " + hotel.Province + " " + hotel.PostalCode;
-                var distance = CalculateDistance(address, fullAddress, unit);
-
-                if (distance <= perimeter)
-                {
-                    filteredHotels.Add(hotel);
-                }
-            }
-
-            return View(filteredHotels);
-        }
-
-        private double CalculateDistance(string originAddress, string destinationAddress, string unit)
-        {
-            var requestUri = string.Format("https://maps.googleapis.com/maps/api/distancematrix/json?origins={0}&destinations={1}&key={2}",
-                originAddress, destinationAddress, _configuration.GetValue<string>("GoogleMapsApiKey"));
-
-            var request = WebRequest.Create(requestUri);
-            var response = request.GetResponse();
-            var json = string.Empty;
-
-            using (var stream = response.GetResponseStream())
-            {
-                using (var reader = new StreamReader(stream))
-                {
-                    json = reader.ReadToEnd();
-                }
-            }
-
-            var matrix = JsonConvert.DeserializeObject<DistanceMatrix>(json);
-            var distance = matrix.Rows.First().Elements.First().Distance.Value;
-
-            if (unit == "km")
-            {
-                distance /= 1000;
-            }
-            else if (unit == "mi")
-            {
-                distance /= 1609.34;
-            }
-
-            return distance;
-        }
-
-        public class DistanceMatrix
-        {
-            public List<Row> Rows { get; set; }
-        }
-
-        public class Row
-        {
-            public List<Element> Elements { get; set; }
-        }
-
-        public class Element
-        {
-            public Distance Distance { get; set; }
-        }
-
-        public class Distance
-        {
-            public double Value { get; set; }
-        }
-
-
     }
 }

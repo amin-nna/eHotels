@@ -1,9 +1,59 @@
-﻿@{
+﻿@model IEnumerable<eHotels.Models.Hotels>;
+
+@{
     ViewData["Title"] = "e-Hotels";
 }
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<div class="container pb-5">
+    <div class="row pb-5">
+        <div class="col-md-12">
+            <!-- Hero image -->
+            <div class="jumbotron">
+                <h1 class="display-4">Find your perfect room</h1>
+                <hr class="my-4">
+                <p class="lead">Choose from our wide range of hotels and rooms, and book your stay today!</p>
+                <form class="form-inline">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div>
+        <script>$(function () {
+                $("#hotelschains-container").load("/HotelChain/IndexHome");
+            });</script>
+        <h3 class="mb-4">Our hotels chains</h3>
+        <div id="hotelschains-container"> </div>
+    </div>
+
+    <div class="row mb-12 pb-5">
+        <div class="col-md-12">
+            <!-- Call to action -->
+            <div class="container">
+                <h1 class="display-4">Book your stay today!</h1>
+                <hr class="my-4">
+                <p class="lead">Choose from our wide range of hotels and rooms, and start planning your dream vacation.</p>
+                <a class="btn btn-primary btn-lg" href="#" role="button">Book Now</a>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+
+
+
 

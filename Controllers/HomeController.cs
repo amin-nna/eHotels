@@ -17,6 +17,20 @@ public class HomeController : Controller
     {
         return View();
     }
+    public IActionResult GoBack()
+    {
+        string previousUrl = Request.Headers["Referer"].ToString();
+        if (string.IsNullOrEmpty(previousUrl))
+        {
+            // If there is no previous page, redirect to the home page
+            return RedirectToAction("Index", "Home");
+        }
+        else
+        {
+            // Otherwise, redirect to the previous page
+            return Redirect(previousUrl);
+        }
+    }
 
     public IActionResult Privacy()
     {

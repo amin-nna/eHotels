@@ -1,0 +1,42 @@
+@model IEnumerable<eHotels.Models.RoomAmenities>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+@if (!Model.Any())
+{
+    <p>No amenity found.</p>
+}
+else
+{
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { RoomNumber = item.RoomNumber, amenity = item.Amenity }) |
+                        @Html.ActionLink("Details", "Details", new { RoomNumber = item.RoomNumber, amenity = item.Amenity }) |
+                        @Html.ActionLink("Delete", "Delete", new { RoomNumber = item.RoomNumber, amenity = item.Amenity })
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}

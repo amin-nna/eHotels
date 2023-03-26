@@ -2,7 +2,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <div class="container-fluid">
-    
+
     <div class="text-center container py-4">
 
         <div class="col">
@@ -11,8 +11,13 @@
                     <h5 class="card-title">@Html.DisplayFor(model => model.Name)</h5>
                     <p class="card-text">@Html.DisplayFor(model => model.Street)</p>
                     <p class="card-text">@Html.DisplayFor(model => model.City), @Html.DisplayFor(model => model.Province) @Html.DisplayFor(model => model.PostalCode)</p>
-                    <div class="d-flex justify-content-end">
-                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Hotel_ID" class="btn btn-primary">Edit</a>
+                </div>
+            </div>
+            <div class="container">
+                <div class="card border-0 rounded-0 shadow mb-4">
+                    <div class="card-body d-flex justify-content-center align-items-center" style="height: 200px;">
+                        <a href="@Url.Action("Create", "Room")" class="stretched-link"></a>
+                        <h4 class="text-center">Add a room</h4>
                     </div>
                 </div>
             </div>
@@ -30,7 +35,7 @@
             <div id="rooms-container"></div>
         </div>
     </div>
-        
+
     <div class="col-12">
         <a href="@Url.Action("Index", "HotelChain")" class="btn btn-primary">Hotel Chains</a>
     </div>

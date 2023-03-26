@@ -4,51 +4,73 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<div>
-  
-    
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Hotel_ID)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Hotel_ID)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Currency)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Currency)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Capacity)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Capacity)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Extendable)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Extendable)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.View)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.View)
-        </dd>
-    </dl>
+<div class="container-fluid">
+
+    <div class="row justify-content-center py-4">
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">Room @Html.DisplayFor(model => model.RoomNumber)</h5>
+                    <p class="card-text">Capacity: @Html.DisplayFor(model => model.Capacity)</p>
+                    <p class="card-text">View: @Html.DisplayFor(model => model.View)</p>
+                    <p class="card-text">Extendable: @Html.DisplayFor(model => model.Extendable)</p>
+                    <p class="card-text">Price: @Html.DisplayFor(model => model.Price) @Html.DisplayFor(model => model.Currency)</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card border-0 rounded-0 shadow mb-4">
+                <div class="card-body d-flex justify-content-center align-items-center" style="height: 200px;">
+                    <a href="@Url.Action("Create", "Amenity")" class="stretched-link"></a>
+                    <h4 class="text-center">Add an amenity <i class="fas fa-plus-circle"></i></h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card border-0 rounded-0 shadow mb-4">
+                <div class="card-body d-flex justify-content-center align-items-center" style="height: 200px;">
+                    <a href="@Url.Action("Create", "Issue")" class="stretched-link"></a>
+                    <h4 class="text-center">Add an issue <i class="fas fa-plus-circle"></i></h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h3 class="card-title mb-4">Amenities</h3>
+                    <div id="amenities-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h3 class="card-title mb-4">Issues</h3>
+                    <div id="issues-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 mt-4">
+            <a href="@Url.Action("Index", "HotelChain")" class="btn btn-primary">Hotel Chains</a>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.RoomNumber">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+<script>
+    $(function () {
+        var Room_ID = "@Model.RoomID";
+        var encoded_Room_ID = encodeURIComponent(Room_ID);
+        $("#amenities-container").load("/Amenity/IndexRoom?Room_ID=" + encoded_Room_ID);
+        $("#issues-container").load("/Issue/IndexRoom?Room_ID=" + encoded_Room_ID);
+    });
+</script>
+

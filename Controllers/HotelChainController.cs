@@ -30,6 +30,13 @@ namespace eHotels.Controllers
                           Problem("Entity set 'ApplicationDbContext.HotelChain'  is null.");
         }
 
+        public async Task<IActionResult> IndexHome()
+        {
+            return _context.HotelChain != null ?
+                        PartialView(await _context.HotelChain.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.HotelChain'  is null.");
+        }
+
         // GET: HotelChain/Details/5
         public async Task<IActionResult> Details(string id)
         {

@@ -22,7 +22,7 @@ namespace eHotels.Models
         public string? Customer { get; set; }
 
         [ForeignKey("RoomNumber")]
-        public int? RoomNumber { get; set; }
+        public string? RoomNumber { get; set; }
 
         [ForeignKey("Employee_Booking")]
         public string? Employee { get; set; }
