@@ -1,0 +1,17 @@
+﻿@model IEnumerable<eHotels.Models.number_of_available_rooms_per_area>;
+
+
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Area</h5>
+                    <p class="card-text">@item.Count</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

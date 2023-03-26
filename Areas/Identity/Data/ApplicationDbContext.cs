@@ -69,7 +69,21 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             .HasForeignKey(ri => ri.RoomNumber)
             .OnDelete(DeleteBehavior.Cascade);
 
-        
+        builder.Entity<number_of_available_rooms_per_area>(
+           eb =>
+           {
+               eb.HasNoKey();
+               eb.ToView("View_number_of_available_rooms_per_area");
+               eb.Property(v => v.Area).HasColumnName("Area");
+           });
+
+        builder.Entity<hotel_capacity>(
+          eb =>
+          {
+              eb.HasNoKey();
+              eb.ToView("View_hotel_capacity");
+              eb.Property(v => v.Capacity).HasColumnName("Capacity");
+          });
     }
 
 
@@ -83,6 +97,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<RoomIssues> RoomIssue { get; set; }
     public DbSet<Bookings> Booking { get; set; }
     public DbSet<Rentings> Renting { get; set; }
+    public DbSet<number_of_available_rooms_per_area> View_number_of_available_rooms_per_area { get; set; }
+    public DbSet<hotel_capacity> View_hotel_capacity { get; set; }
     //public DbSet<ImageModel> ImagesBiens { get; set; }
 
 }

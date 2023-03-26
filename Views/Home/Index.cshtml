@@ -35,6 +35,21 @@
         <div id="hotelschains-container"> </div>
     </div>
 
+    <div class="container py-4">
+        <script>$(function () {
+                $("#view1-container").load("/Home/RoomsArea");
+            });</script>
+        <h3 class="mb-4">Available rooms per area</h3>
+        <div id="view1-container"></div>
+    </div>
+    <div class="container py-4">
+        <script>$(function () {
+                $("#view2-container").load("/Home/HotelCapacity");
+            });</script>
+        <h3 class="mb-4">Hotels capacity</h3>
+        <div id="view2-container"></div>
+    </div>
+
     <div class="row mb-12 pb-5">
         <div class="col-md-12">
             <!-- Call to action -->
