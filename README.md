@@ -14,10 +14,15 @@
   <p>This is a web application built using ASP.net. The purpose of this application is to customers to easily book rooms in hotels, seeing room availability in real time</p>
 
   <h2>Features</h2>
+  
   <ul>
-    <li>Feature 1</li>
-    <li>Feature 2</li>
-    <li>Feature 3</li>
+    
+    <li>Admninistrator interface for Hotel Chains management</li>
+    <li>Employee interface for bookings and rentings management</li>
+    <li>User interface for bookings</li>
+    <li>Google Apis used to locate and display data on map</li>
+    <li>Email sender</li>
+    
   </ul>
 
   <h2>Technologies Used</h2>
@@ -34,8 +39,11 @@
   <ol>
     <li>Clone this repository to your local machine.</li>
     <li>Open the solution file in Visual Studio.</li>
-    <li>Open appsettings.Development.json and add conigurations</li>
+    <li>Configure appsettings.json in secrets</li>
     <li>Build the solution.</li>
+    <li>Run SQL queries in the folder SQLqueries on your database.</li>
+    <li>Run migrations.</li>
+    <li>Update database.</li>
     <li>Run the application.</li>
   </ol>
 
