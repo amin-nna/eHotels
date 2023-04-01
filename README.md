@@ -43,6 +43,9 @@
     <li>Run SQL queries in the folder SQLqueries on your database.</li>
     <li>Run migrations.</li>
     <li>Update database.</li>
+    <li>Run queries to create indexes</li>
+    <li>Run queries to create views</li>
+    <li>Run queries to create triggers</li>
     <li>Run the application.</li>
   </ol>
 
