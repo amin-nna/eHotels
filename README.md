@@ -48,6 +48,7 @@
     <li>Run queries to create triggers</li>
     <li>Run the application.</li>
   </ol>
+  
 
   <p>This project is under copyright.</p>
 </body>
