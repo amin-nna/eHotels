@@ -1,0 +1,1 @@
+DECLARE @DeletedRowsRoom TABLE (RoomID VARCHAR(50))

@@ -279,6 +279,10 @@ namespace eHotels.Migrations
                     b.Property<DateTime>("End")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("RoomID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("RoomNumber")
                         .HasColumnType("nvarchar(max)");
 
@@ -286,6 +290,8 @@ namespace eHotels.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("BookingID");
+
+                    b.HasIndex("RoomID");
 
                     b.ToTable("Booking");
                 });
@@ -345,9 +351,6 @@ namespace eHotels.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Rating")
-                        .HasColumnType("int");
-
                     b.Property<string>("Street")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -406,6 +409,9 @@ namespace eHotels.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("Rating")
+                        .HasColumnType("int");
+
                     b.Property<int>("RoomsCount")
                         .HasColumnType("int");
 
@@ -446,10 +452,15 @@ namespace eHotels.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("RoomsRoomID")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("Start")
                         .HasColumnType("datetime2");
 
                     b.HasKey("RentingID");
+
+                    b.HasIndex("RoomsRoomID");
 
                     b.ToTable("Renting");
                 });
@@ -531,12 +542,12 @@ namespace eHotels.Migrations
             modelBuilder.Entity("eHotels.Models.hotel_capacity", b =>
                 {
                     b.Property<int>("Capacity")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Capacity");
 
                     b.Property<string>("Hotel")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Name");
+                        .HasColumnType("nvarchar(max)");
 
                     b.ToTable((string)null);
 
@@ -548,7 +559,7 @@ namespace eHotels.Migrations
                     b.Property<string>("Area")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Name");
+                        .HasColumnName("Area");
 
                     b.Property<int>("Count")
                         .HasColumnType("int");
@@ -609,6 +620,17 @@ namespace eHotels.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("eHotels.Models.Bookings", b =>
+                {
+                    b.HasOne("eHotels.Models.Rooms", "Room")
+                        .WithMany("Bookings")
+                        .HasForeignKey("RoomID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+                });
+
             modelBuilder.Entity("eHotels.Models.CentralOffices", b =>
                 {
                     b.HasOne("eHotels.Models.HotelChains", "HotelChain")
@@ -640,6 +662,13 @@ namespace eHotels.Migrations
                         .IsRequired();
 
                     b.Navigation("HotelChain");
+                });
+
+            modelBuilder.Entity("eHotels.Models.Rentings", b =>
+                {
+                    b.HasOne("eHotels.Models.Rooms", null)
+                        .WithMany("Rentings")
+                        .HasForeignKey("RoomsRoomID");
                 });
 
             modelBuilder.Entity("eHotels.Models.RoomAmenities", b =>
@@ -691,6 +720,10 @@ namespace eHotels.Migrations
 
             modelBuilder.Entity("eHotels.Models.Rooms", b =>
                 {
+                    b.Navigation("Bookings");
+
+                    b.Navigation("Rentings");
+
                     b.Navigation("RoomAmenities");
 
                     b.Navigation("RoomIssues");

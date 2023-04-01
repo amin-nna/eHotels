@@ -4,6 +4,9 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
+
+
+
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
@@ -14,6 +17,7 @@
             <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account</a>
 
         </li>
+        <a >Hello @UserManager.GetUserName(User)!</a>
         @if (User.IsInRole("Administrator"))
         {
             <li class="nav-item">
@@ -23,13 +27,13 @@
         @if (User.IsInRole("Employee"))
         {
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Index">Employee's Dashboard</a>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Booking" asp-action="IndexEmployee">Employee's Dashboard</a>
             </li>
         }
         @if (User.IsInRole("Client"))
         {
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Client" asp-action="Index">Customer's Dashboard</a>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Booking" asp-action="IndexClient">Customer's Dashboard</a>
             </li>
         }
 

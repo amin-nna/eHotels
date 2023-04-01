@@ -1,3 +1,4 @@
+
 @model IEnumerable<eHotels.Models.HotelChains>
 
 @{
@@ -36,12 +37,11 @@
                         <td>@Html.DisplayFor(modelItem => item.City)</td>
                         <td>@Html.DisplayFor(modelItem => item.Province)</td>
                         <td>@Html.DisplayFor(modelItem => item.PostalCode)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Hotels)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Rating)</td>
+                        <td>@Html.DisplayFor(modelItem => item.HotelsCount)</td>
                         <td>
-                            <a href="@Url.Action("Edit", new { id = item.Name })">Edit</a> |
-                            <a href="@Url.Action("Details", new { id = item.Name })">Details</a> |
-                            <a href="@Url.Action("Delete", new { id = item.Name })">Delete</a>
+                            <a class="btn btn-secondary me-2" asp-action="Edit" asp-route-id="@item.Name">Edit</a>
+                            <a class="btn btn-secondary me-2" asp-action="Details" asp-route-id="@item.Name">Details</a>
+                            <a class="btn btn-secondary me-2" asp-action="Delete" asp-route-id="@item.Name">Delete</a>
                         </td>
                     </tr>
                 }

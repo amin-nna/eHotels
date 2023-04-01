@@ -37,7 +37,6 @@ namespace eHotels.Models
         [BindNever]
         public virtual ICollection<CentralOffices> CentralOffices { get; set; }
 
-        public int? Rating { get; set; }
     }
 }
 

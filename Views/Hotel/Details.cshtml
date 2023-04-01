@@ -15,9 +15,17 @@
             </div>
             <div class="container">
                 <div class="card border-0 rounded-0 shadow mb-4">
-                    <div class="card-body d-flex justify-content-center align-items-center" style="height: 200px;">
+                    <div class="card-body d-flex justify-content-center align-items-center" style="height: 70px;">
                         <a href="@Url.Action("Create", "Room")" class="stretched-link"></a>
                         <h4 class="text-center">Add a room</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="card border-0 rounded-0 shadow mb-4">
+                    <div class="card-body d-flex justify-content-center align-items-center" style="height: 70px;">
+                        <a href="@Url.Action("Create", "HotelPhoneNumber")" class="stretched-link"></a>
+                        <h4 class="text-center">Add a Phone Number</h4>
                     </div>
                 </div>
             </div>
@@ -33,6 +41,18 @@
             </script>
             <h3 class="mb-4">Rooms</h3>
             <div id="rooms-container"></div>
+        </div>
+
+        <div class="container py-4">
+            <script>
+    $(function() {
+        var hotel_ID = "@Model.Hotel_ID";
+        var encoded_hotel_ID = encodeURIComponent(hotel_ID);
+        $("#phoneNumbers-container").load("/HotelPhoneNumber/IndexHotel?hotel_ID=" + encoded_hotel_ID);
+    });
+            </script>
+            <h3 class="mb-4">Phone numbers</h3>
+            <div id="phoneNumbers-container"></div>
         </div>
     </div>
 

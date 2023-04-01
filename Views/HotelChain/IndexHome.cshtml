@@ -22,7 +22,6 @@ else
                         <p class="card-text">@Html.DisplayFor(modelItem => item.Street)</p>
                         <p class="card-text">@Html.DisplayFor(modelItem => item.City), @Html.DisplayFor(modelItem => item.Province) , @Html.DisplayFor(modelItem => item.PostalCode)</p>
                         <p class="card-text">@Html.DisplayFor(modelItem => item.HotelsCount) hotels</p>
-                        <p class="card-text">@Html.DisplayFor(modelItem => item.Rating)</p>
                     </div>
                     <div class="d-flex justify-content-end">
                         <a class="btn btn-secondary me-2" asp-action="Details" asp-route-id="@item.Name">Details</a>

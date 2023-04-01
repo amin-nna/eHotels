@@ -1,0 +1,51 @@
+@model IEnumerable<eHotels.Models.Bookings>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div>
+    <h3>Bookings not yet rented</h3>
+    <div class="booking-list">
+        @foreach (var item in Model)
+        {
+            <div class="booking-item">
+                <div class="booking-item-details">
+                    <p><strong>Hotel:</strong> @Html.DisplayFor(modelItem => item.Room.Hotel.Hotel_ID)</p>
+                    <p><strong>Room Number:</strong> @Html.DisplayFor(modelItem => item.RoomNumber)</p>
+                    <p><strong>Start:</strong> @Html.DisplayFor(modelItem => item.Start)</p>
+                    <p><strong>End:</strong> @Html.DisplayFor(modelItem => item.End)</p>
+                    <a class="btn btn-primary" asp-area="" asp-controller="Renting" asp-action="Create" asp-route-bookingId="@item.BookingID">Rent</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<style>
+    .booking-list {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .booking-item {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin: 10px;
+        flex: 1 1 300px;
+    }
+
+    .booking-item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .booking-item-actions a {
+        margin-left: 10px;
+    }
+
+    .booking-item-details p {
+        margin: 5px 0;
+    }
+</style>

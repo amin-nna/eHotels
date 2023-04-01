@@ -16,10 +16,12 @@ namespace eHotels.Models
         [Required]
         public int BookingID { get; set; }
 
-
         // ? To set OnDelete behavior to SET NULL 
         [ForeignKey("Customer_SSN_SIN")]
         public string? Customer { get; set; }
+
+        [ForeignKey("RoomID")]
+        public string? RoomID { get; set; }
 
         [ForeignKey("RoomNumber")]
         public string? RoomNumber { get; set; }
@@ -35,6 +37,9 @@ namespace eHotels.Models
 
         [Required]
         public Boolean Active { get; set; }
+
+        [BindNever]
+        public virtual Rooms Room { get; set; }
     }
 
 }

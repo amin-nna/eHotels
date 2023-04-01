@@ -1,58 +1,99 @@
 @model eHotels.Models.Bookings
+<!-- jQuery library -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>Bookings</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Customer" class="control-label"></label>
-                <input asp-for="Customer" class="form-control" />
-                <span asp-validation-for="Customer" class="text-danger"></span>
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Book a Room</h5>
+                <div class="card-body">
+                    @if (ViewBag.ErrorMessage != null)
+                    {
+                        <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+                    }
+                    <form id="bookingForm" asp-action="Create" asp-route-roomID="@Model.RoomNumber">
+                        <div class="form-group">
+                            <input type="hidden" asp-for="RoomNumber" value="@Model.RoomNumber" />
+                            <label type="hidden" asp-for="Start" class="control-label"></label>
+                            <input id="debut" type="hidden" asp-for="Start" value="" />
+                            <input id="S" class="form-control datepicker-input" />
+                            <span asp-validation-for="Start" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label type="hidden" asp-for="End" class="control-label"></label>
+                            <input id="fin" type="hidden" asp-for="End" value="" />
+                            <input id="E" class="form-control datepicker-input" />
+                            <span asp-validation-for="End" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="RoomNumber" class="control-label"></label>
-                <input asp-for="RoomNumber" class="form-control" />
-                <span asp-validation-for="RoomNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Employee" class="control-label"></label>
-                <input asp-for="Employee" class="form-control" />
-                <span asp-validation-for="Employee" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Start" class="control-label"></label>
-                <input asp-for="Start" class="form-control" />
-                <span asp-validation-for="Start" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="End" class="control-label"></label>
-                <input asp-for="End" class="form-control" />
-                <span asp-validation-for="End" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script>
+        $(function () {
+    var bookedDates = @Html.Raw(ViewBag.BookedDates);
+    var rentedDates = @Html.Raw(ViewBag.RentedDates);
+    var disabledDates = [];
+
+    $(".datepicker-input").datepicker({
+        dateFormat: "mm/dd/yy",
+        minDate: 0,
+        beforeShowDay: function (date) {
+            for (var i = 0; i < bookedDates.length; i++) {
+                var dateA = new Date(bookedDates[i].Start);
+                var dateB = new Date(bookedDates[i].End);
+
+                if (date >= dateA && date <= dateB) {
+                    return [false];
+                }
+            }
+
+            for (var i = 0; i < rentedDates.length; i++) {
+                var dateA = new Date(rentedDates[i].Start);
+                var dateB = new Date(rentedDates[i].End);
+
+                if (date >= dateA && date <= dateB) {
+                    return [false];
+                }
+            }
+
+            return [true];
+        },
+        onClose: function (selectedDate) {
+            var element = $(this);
+            var id = element.attr("id");
+
+            if (id == "S") {
+                $("#E").datepicker("option", "minDate", selectedDate);
+                $("#debut").val(selectedDate); 
+                
+            } else {
+                $("#S").datepicker("option", "maxDate", selectedDate);
+                $("#fin").val(selectedDate); 
+            }
+        }
+    });
+});
+
+    </script>
 }
+

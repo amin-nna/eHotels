@@ -100,7 +100,8 @@ else
                                             <p class="card-text">@Html.DisplayNameFor(modelItem => item.Extendable) : @Html.DisplayFor(modelItem => item.Extendable)</p>
                                             <p class="card-text">@Html.DisplayNameFor(modelItem => item.View) : @Html.DisplayFor(modelItem => item.View)</p>
                                             <p class="card-text">@Html.DisplayNameFor(modelItem => item.Price) : @Html.DisplayFor(modelItem => item.Price) @Html.DisplayFor(modelItem => item.Currency)</p>
-                                            <button class="btn btn-primary">Book</button>
+                                            <a class="btn btn-primary" asp-controller="Booking" asp-action="Create" asp-route-roomID="@item.RoomID">Book</a>
+
                                         </div>
                                     </div>
                                 </div>

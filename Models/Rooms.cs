@@ -48,6 +48,11 @@ namespace eHotels.Models
         [BindNever]
         public virtual ICollection<RoomAmenities> RoomAmenities { get; set; }
 
+        [BindNever]
+        public virtual ICollection<Bookings>? Bookings { get; set; }
+
+        [BindNever]
+        public virtual ICollection<Rentings>? Rentings { get; set; }
     }
      
 }

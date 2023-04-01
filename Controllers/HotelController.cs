@@ -70,7 +70,7 @@ namespace eHotels.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Hotel_ID,Name,Hotel_chainName_ID,Street,City,Province,PostalCode,Email,RoomsCount")] Hotels hotels)
+        public async Task<IActionResult> Create([Bind("Hotel_ID,Name,Hotel_chainName_ID,Street,City,Province,PostalCode,Email,RoomsCount,Rating")] Hotels hotels)
         {
             ModelState.Remove("Rooms");
             ModelState.Remove("HotelChain");
@@ -111,7 +111,7 @@ namespace eHotels.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Hotel_ID,Name,Hotel_chainName_ID,Street,City,Province,PostalCode,Email,RoomsCount")] Hotels hotels)
+        public async Task<IActionResult> Edit(string id, [Bind("Hotel_ID,Name,Hotel_chainName_ID,Street,City,Province,PostalCode,Email,RoomsCount,Rating")] Hotels hotels)
         {
             if (id != hotels.Hotel_ID)
             {
@@ -159,7 +159,6 @@ namespace eHotels.Controllers
             {
                 return NotFound();
             }
-
             return View(hotels);
         }
 
@@ -179,7 +178,7 @@ namespace eHotels.Controllers
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "HotelChain");
         }
 
         private bool HotelsExists(string id)

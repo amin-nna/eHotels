@@ -58,24 +58,6 @@ namespace eHotels.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Booking",
-                columns: table => new
-                {
-                    BookingID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Customer = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RoomNumber = table.Column<int>(type: "int", nullable: true),
-                    Employee = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Start = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    End = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Active = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Booking", x => x.BookingID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "HotelChain",
                 columns: table => new
                 {
@@ -84,30 +66,11 @@ namespace eHotels.Migrations
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Province = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HotelsCount = table.Column<int>(type: "int", nullable: false),
-                    Rating = table.Column<int>(type: "int", nullable: true)
+                    HotelsCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HotelChain", x => x.Name);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Renting",
-                columns: table => new
-                {
-                    RentingID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RoomNumber = table.Column<int>(type: "int", nullable: false),
-                    Employee = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Customer = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Start = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    End = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Active = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Renting", x => x.RentingID);
                 });
 
             migrationBuilder.CreateTable(
@@ -251,7 +214,8 @@ namespace eHotels.Migrations
                     Province = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RoomsCount = table.Column<int>(type: "int", nullable: false)
+                    RoomsCount = table.Column<int>(type: "int", nullable: false),
+                    Rating = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -305,6 +269,55 @@ namespace eHotels.Migrations
                         principalTable: "Hotel",
                         principalColumn: "Hotel_ID",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Booking",
+                columns: table => new
+                {
+                    BookingID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Customer = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RoomNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Employee = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Start = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    End = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Active = table.Column<bool>(type: "bit", nullable: false),
+                    RoomID = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Booking", x => x.BookingID);
+                    table.ForeignKey(
+                        name: "FK_Booking_Room_RoomID",
+                        column: x => x.RoomID,
+                        principalTable: "Room",
+                        principalColumn: "RoomID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Renting",
+                columns: table => new
+                {
+                    RentingID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoomNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Employee = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Customer = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Start = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    End = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Active = table.Column<bool>(type: "bit", nullable: false),
+                    RoomsRoomID = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Renting", x => x.RentingID);
+                    table.ForeignKey(
+                        name: "FK_Renting_Room_RoomsRoomID",
+                        column: x => x.RoomsRoomID,
+                        principalTable: "Room",
+                        principalColumn: "RoomID");
                 });
 
             migrationBuilder.CreateTable(
@@ -385,6 +398,11 @@ namespace eHotels.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Booking_RoomID",
+                table: "Booking",
+                column: "RoomID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CentralOffice_HotelChain_Name",
                 table: "CentralOffice",
                 column: "HotelChain_Name");
@@ -398,6 +416,11 @@ namespace eHotels.Migrations
                 name: "IX_HotelPhoneNumber_Hotel_Hotel_ID",
                 table: "HotelPhoneNumber",
                 column: "Hotel_Hotel_ID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Renting_RoomsRoomID",
+                table: "Renting",
+                column: "RoomsRoomID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Room_Hotel_ID",

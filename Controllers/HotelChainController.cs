@@ -23,6 +23,7 @@ namespace eHotels.Controllers
         }
 
         // GET: HotelChain
+        [Authorize]
         public async Task<IActionResult> Index()
         {
               return _context.HotelChain != null ? 
@@ -100,7 +101,7 @@ namespace eHotels.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Name,Street,City,Province,PostalCode,HotelsCount,Rating")] HotelChains hotelChains)
+        public async Task<IActionResult> Edit(string id, [Bind("Name,Street,City,Province,PostalCode,HotelsCount")] HotelChains hotelChains)
         {
             if (id != hotelChains.Name)
             {

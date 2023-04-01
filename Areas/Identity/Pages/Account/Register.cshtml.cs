@@ -169,6 +169,8 @@ namespace eHotels.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            Cities = await CityProvider.GetCitiesInCanadaAsync();
+            Cities.Sort();
             if (ModelState.IsValid)
             {
                 var user = CreateUser();

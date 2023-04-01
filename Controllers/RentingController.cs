@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using eHotels.Areas.Identity.Data;
+using eHotels.Services;
 using eHotels.Models;
 
 namespace eHotels.Controllers
@@ -13,10 +14,12 @@ namespace eHotels.Controllers
     public class RentingController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private IUserService _userService;
 
-        public RentingController(ApplicationDbContext context)
+        public RentingController(ApplicationDbContext context, IUserService userService)
         {
             _context = context;
+            _userService = userService;
         }
 
         // GET: Renting
@@ -46,23 +49,45 @@ namespace eHotels.Controllers
         }
 
         // GET: Renting/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create(int? bookingId)
         {
-            return View();
+            if (bookingId == null)
+            {
+                return NotFound();
+            }
+
+            var booking = await _context.Booking.FindAsync(bookingId);
+            if (booking == null)
+            {
+                return NotFound();
+            }
+
+            var rentings = new Rentings
+            {
+                RoomNumber = booking.RoomID,
+                Customer = booking.Customer,
+                Start = booking.Start,
+                End = booking.End
+            };
+
+            return View(rentings);
         }
 
-        // POST: Renting/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("RentingID,RoomNumber,Employee,Customer,Start,End,Active")] Rentings rentings)
         {
+            ModelState.Remove("Employee");
+            string connectedUser = _userService.getUserId();
+            rentings.Employee = connectedUser + "";
             if (ModelState.IsValid)
             {
                 _context.Add(rentings);
+                var booking = await _context.Booking.FindAsync(rentings.RoomNumber);
+                booking.Active = true;
+                _context.Update(booking);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("IndexEmployee", "Booking");
             }
             return View(rentings);
         }

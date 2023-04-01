@@ -7,16 +7,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using eHotels.Areas.Identity.Data;
 using eHotels.Models;
+using Microsoft.Data.SqlClient;
+using System.Data;
+using eHotels.Services;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace eHotels.Controllers
 {
     public class RoomController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private ApplicationDbContext _context;
 
         public RoomController(ApplicationDbContext context)
         {
             _context = context;
+
         }
 
         // GET: Room
@@ -25,6 +30,7 @@ namespace eHotels.Controllers
             var applicationDbContext = _context.Room.Include(r => r.Hotel);
             return View(await applicationDbContext.ToListAsync());
         }
+
         /*
         public async Task<IActionResult> IndexSearchFilter()
         {
@@ -98,19 +104,19 @@ namespace eHotels.Controllers
                 switch (category.Value)
                 {
                     case 1:
-                        query = query.Where(p => p.Hotel.HotelChain.Rating == 1);
+                        query = query.Where(p => p.Hotel.Rating == 1);
                         break;
                     case 2:
-                        query = query.Where(p => p.Hotel.HotelChain.Rating == 2);
+                        query = query.Where(p => p.Hotel.Rating == 2);
                         break;
                     case 3:
-                        query = query.Where(p => p.Hotel.HotelChain.Rating == 3);
+                        query = query.Where(p => p.Hotel.Rating == 3);
                         break;
                     case 4:
-                        query = query.Where(p => p.Hotel.HotelChain.Rating == 4);
+                        query = query.Where(p => p.Hotel.Rating == 4);
                         break;
                     case 5:
-                        query = query.Where(p => p.Hotel.HotelChain.Rating == 5);
+                        query = query.Where(p => p.Hotel.Rating == 5);
                         break;
                 }
             }
@@ -161,10 +167,13 @@ namespace eHotels.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("RoomID,RoomNumber,Hotel_ID,Price,Currency,Capacity,Extendable,View")] Rooms rooms)
         {
+            
             ModelState.Remove("Hotel");
             ModelState.Remove("RoomIssues");
             ModelState.Remove("RoomID");
             ModelState.Remove("RoomAmenities");
+            ModelState.Remove("Bookings");
+            ModelState.Remove("Rentings");
             if (ModelState.IsValid)
             {
                 var hotelR = await _context.Hotel.FindAsync(rooms.Hotel_ID);
@@ -207,6 +216,9 @@ namespace eHotels.Controllers
             {
                 return NotFound();
             }
+            ModelState.Remove("Hotel");
+            ModelState.Remove("RoomIssues");
+            ModelState.Remove("Employee");
 
             if (ModelState.IsValid)
             {
@@ -263,9 +275,17 @@ namespace eHotels.Controllers
             var rooms = await _context.Room.FindAsync(id);
             if (rooms != null)
             {
-                _context.Room.Remove(rooms);
+                // Declare a table variable to store the deleted Room IDs
+                _context.Database.ExecuteSqlRaw("DECLARE @DeletedRowsRoom TABLE (RoomID nvarchar(450)) " +
+                                                "SET NOCOUNT ON; " +
+                                                "DELETE FROM [Room] OUTPUT deleted.RoomID INTO @DeletedRowsRoom WHERE [RoomID] = @p0",
+                    new SqlParameter("@p0", id));
+
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Index", "HotelChain");
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", "HotelChain");
         }

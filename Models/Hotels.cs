@@ -42,6 +42,8 @@ namespace eHotels.Models
         [Required]
         public int RoomsCount { get; set; }
 
+        public int? Rating { get; set; }
+
         [BindNever]
         public virtual HotelChains HotelChain { get; set; }
 

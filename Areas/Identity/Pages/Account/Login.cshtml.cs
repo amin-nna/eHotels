@@ -125,11 +125,11 @@ namespace eHotels.Areas.Identity.Pages.Account
                     switch (roles.FirstOrDefault())
                     {
                         case "Administrator":
-                            return RedirectToAction("Index", "Administrator");
+                            return RedirectToAction("Index", "HotelChain");
                         case "Employee":
-                            return RedirectToAction("Index", "Employee");
+                            return RedirectToAction("IndexEmployee", "Booking");
                         case "Client":
-                            return RedirectToAction("Index", "Client");
+                            return RedirectToAction("IndexClient", "Booking");
                         default:
                             return LocalRedirect(returnUrl);
                     }

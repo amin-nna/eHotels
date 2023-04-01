@@ -1,0 +1,52 @@
+@model IEnumerable<eHotels.Models.Bookings>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>My bookings</h1>
+
+
+<div class="booking-list">
+    @foreach (var item in Model)
+    {
+        <div class="booking-item">
+            <div class="booking-item-details">
+                <p><strong>Room Number:</strong> @Html.DisplayFor(modelItem => item.Room.RoomNumber)</p>
+                <p><strong>Hotel:</strong> @Html.DisplayFor(modelItem => item.Room.Hotel.Name)</p>
+                <p><strong>Adress:</strong> @Html.DisplayFor(modelItem => item.Room.Hotel.Street), @Html.DisplayFor(modelItem => item.Room.Hotel.City)</p>
+                <p><strong>Start:</strong> @Html.DisplayFor(modelItem => item.Start)</p>
+                <p><strong>End:</strong> @Html.DisplayFor(modelItem => item.End)</p>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .booking-list {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .booking-item {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin: 10px;
+        flex: 1 1 300px;
+    }
+
+    .booking-item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .booking-item-actions a {
+        margin-left: 10px;
+    }
+
+    .booking-item-details p {
+        margin: 5px 0;
+    }
+</style>
