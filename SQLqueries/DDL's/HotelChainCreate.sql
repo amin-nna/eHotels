@@ -1,0 +1,20 @@
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[HotelChain](
+	[Name] [nvarchar](450) NOT NULL,
+	[Street] [nvarchar](max) NOT NULL,
+	[City] [nvarchar](max) NOT NULL,
+	[Province] [nvarchar](max) NOT NULL,
+	[PostalCode] [nvarchar](max) NOT NULL,
+	[HotelsCount] [int] NOT NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+ALTER TABLE [dbo].[HotelChain] ADD  CONSTRAINT [PK_HotelChain] PRIMARY KEY CLUSTERED 
+(
+	[Name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
